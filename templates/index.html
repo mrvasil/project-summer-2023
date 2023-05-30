@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Проверка пароля</title>
+ <meta charset="UTF-8">
+</head>
+<body>
+ <h1>Проверка пароля</h1>
+ <label>Введите пароль:</label>
+ <input id="password" type="password">
+ <button id="submit" type="button">Проверить</button>
+ <div id="result"></div>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <script>
+     $(document).ready(function() {
+    var passwordInput = $('#password');
+    var submitButton = $('#submit');
+    var resultDiv = $('#result');
+
+    submitButton.click(function() {
+        var password = passwordInput.val();
+        $.ajax({
+            url: '{{ url_for("check_password") }}',
+            type: 'POST',
+            data: {password: password},
+            success: function(response) {
+                if (response.includes('successfully')) {
+                    window.location.replace('/students');
+                    document.cookie = "user="+response
+                } else {
+                    resultDiv.text(response);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+});
+ </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+	<form action="/search">
+		<input type="text" name="query">
+		<input type="submit">
+	</form>
+	<div id="suggestions">
+	</div>
+
+	<script>
+		let tag = $('input[name=query]');
+		tag.on('input', function(event){
+			let changed_tag = $(event.target);
+			let query = changed_tag.val();
+			
+
+			$.get(`/search?query=${query}`, function(data){
+				// console.log(data);
+				data = JSON.parse(data);
+				let text = `<b>List of cities starting with ${query}:</b><br/>`;
+				text += '<ul>';
+				for (let i = 0; i < data.length; i += 1) {
+					text += `<li>${data[i]}</li>`;
+				}
+				text += '</ul>';
+				console.log(text);
+				setTimeout(function(){
+					$('#suggestions').html(text);
+				}, 10);
+
+			})
+
+		});
+	</script>
+</body>
+</html>

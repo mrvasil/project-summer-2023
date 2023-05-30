@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Таблица учеников</title>
+ <style>
+  table {
+   border-collapse: collapse;
+   width: 100%;
+  }
+  th, td {
+   text-align: left;
+   padding: 8px;
+   border-bottom: 1px solid #ddd;
+   border-top: 1px solid #ddd;
+   border-right: 1px solid #ddd;
+  }
+  th {
+   background-color: #f2f2f2;
+   border-top: none;
+  }
+  center {
+    margin: 20px;
+  }
+ </style>
+</head>
+<body>
+    <input type="text" id="search_words" >
+    <button onclick="search()">Поиск</button> <br>
+ <table id="text">
+  <thead>
+   <tr>
+    <th><center>5 класс</center></th>
+    <th><center>6 клас</center></th>
+    <th><center>7 клас</center></th>
+    <th><center>8 клас</center></th>
+    <th><center>9 клас</center></th>
+    <th><center>10 клас</center></th>
+    <th><center>11 клас</center></th>
+   </tr>
+  </thead>
+  <tbody>
+   {% for item in data %}
+
+   <tr>
+    <td><center>{{ item.five }}<br><a href="/profile?name={{ item.five }}&class=5"><br><button>Профиль</button></a></center></td>
+    <td><center>{{ item.six }}<br><a href="/profile?name={{ item.six }}&class=6"><br><button>Профиль</button></a></center></td>
+    <td><center>{{ item.seven }}<br><a href="/profile?name={{ item.seven }}&class=7"><br><button>Профиль</button></a></center></td>
+    <td><center>{{ item.eight }}<br><a href="/profile?name={{ item.eight }}&class=8"><br><button>Профиль</button></a></center></td>
+    <td><center>{{ item.nine }}<br><a href="/profile?name={{ item.nine }}&class=9"><br><button>Профиль</button></a></center></td>
+    <td><center>{{ item.ten }}<br><a href="/profile?name={{ item.ten }}&class=10"><br><button>Профиль</button></a></center></td>
+    <td><center>{{ item.eleven }}<br><a href="/profile?name={{ item.eleven }}&class=11"><br><button>Профиль</button></a></center></td>
+   </tr>
+
+   {% endfor %}
+  </tbody>
+ </table>
+
+
+
+
+
+
+ <script type="text/javascript">
+function search() {
+  var words = search_words.value
+  words = words.replace("<", "");
+  words = words.replace(">", "");
+  var text = document.getElementById('text').innerHTML
+  var result = text.replace(new RegExp(words,'g'), "<div style='background:red; display:inline;'>" + words + "</div>");
+  document.getElementById('text').innerHTML = result;
+}
+</script>
+
+
+</body>
+</html>
