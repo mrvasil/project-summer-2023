@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
+import secretsq
 app = Flask(__name__)
 
 
@@ -23,7 +24,7 @@ def names():
 @app.route('/')
 def index():
     user = request.cookies.get('user')
-    if user == '9937frrr875successfullyjrhnuon?u359_8y5h_q8p95yp36':
+    if user == secretsq.secret_cookie:
         return redirect("/students", code=302)
     elif user == 'successfully_student':
         return redirect("/students", code=302)
@@ -34,7 +35,7 @@ def index():
 @app.route('/students')
 def students():
     user = request.cookies.get('user')
-    if user == '9937frrr875successfullyjrhnuon?u359_8y5h_q8p95yp36':
+    if user == secretsq.secret_cookie:
         return render_template('names.html', data=names())
     elif user == 'successfully_student':
         return 'ты ученик)'
@@ -53,7 +54,7 @@ def profile():
 def check_password():
     password = request.form['password']
     if password == 'admin':
-        return '9937frrr875successfullyjrhnuon?u359_8y5h_q8p95yp36'
+        return secretsq.secret_cookie
     elif password == 'student':
         return 'successfully_student'
     else:
