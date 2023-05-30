@@ -22,19 +22,24 @@ def names():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    user = request.cookies.get('user')
+    if user == '9937frrr875successfullyjrhnuon?u359_8y5h_q8p95yp36':
+        return redirect("/students", code=302)
+    elif user == 'successfully_student':
+        return redirect("/students", code=302)
+    else:
+        return render_template('index.html')
 
 
 @app.route('/students')
 def students():
     user = request.cookies.get('user')
     if user == '9937frrr875successfullyjrhnuon?u359_8y5h_q8p95yp36':
-        print(user)
         return render_template('names.html', data=names())
     elif user == 'successfully_student':
         return 'ты ученик)'
     else:
-        return redirect("/", '200')
+        return redirect("/", code=302)
 
 
 @app.route('/profile')
