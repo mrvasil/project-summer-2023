@@ -28,8 +28,14 @@ def index():
 @app.route('/students')
 def students():
     user = request.cookies.get('user')
-    print(user)
-    return render_template('names.html', data=names())
+    if user == '9937frrr875successfullyjrhnuon?u359_8y5h_q8p95yp36':
+        print(user)
+        return render_template('names.html', data=names())
+    elif user == 'successfully_student':
+        return 'ты ученик)'
+    else:
+        return redirect("/", '200')
+
 
 @app.route('/profile')
 def profile():
@@ -42,7 +48,9 @@ def profile():
 def check_password():
     password = request.form['password']
     if password == 'admin':
-        return 'successfully993736'
+        return '9937frrr875successfullyjrhnuon?u359_8y5h_q8p95yp36'
+    elif password == 'student':
+        return 'successfully_student'
     else:
         return 'Неверный пароль'
     
