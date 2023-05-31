@@ -37,12 +37,9 @@ def index():
 def students():
     user = request.cookies.get('user')
     if user == secretsq.secret_cookie:
-        return render_template('students.html', data=names())
+        return render_template('students_for_1.html', data=names())
     elif user == 'successfully_student':
-        return """ты ученик)<br>
-    <a href="/"> <button style="margin-top: 10px;" onclick="exit()">Выйти из аккаунта</button></a>
-    <script>function exit() {document.cookie = "user=0"} </script>
-    """
+        return render_template('students_for_2.html', data=names())
     else:
         return redirect("/", code=302)
 
@@ -51,8 +48,13 @@ def students():
 def profile():
     name = request.args.get('name')
     class1 = request.args.get('class')
-    print(name, class1)
-    return "Имя: "+name+"<br>Класс: "+class1
+    user = request.cookies.get('user')
+    if user == secretsq.secret_cookie:
+        return "Имя: "+name+"<br>Класс: "+class1
+    elif user == 'successfully_student':
+        return "Имя: "+name+"<br>Класс: "+class1
+    else:
+        return redirect("/", code=302)
 
 @app.route('/check_password', methods=['POST'])
 def check_password():   
