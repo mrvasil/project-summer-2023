@@ -20,7 +20,7 @@
     var submitButton = $('#submit');
     var resultDiv = $('#result');
 
-    submitButton.click(function() {
+    submitButton.click(function() {//
         var password = passwordInput.val();
         $.ajax({
             url: '{{ url_for("check_password") }}',

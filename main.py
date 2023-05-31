@@ -38,7 +38,10 @@ def students():
     if user == secretsq.secret_cookie:
         return render_template('names.html', data=names())
     elif user == 'successfully_student':
-        return 'ты ученик)'
+        return """ты ученик)<br>
+    <a href="/"> <button style="margin-top: 10px;" onclick="exit()">Выйти из аккаунта</button></a>
+    <script>function exit() {document.cookie = "user=0"} </script>
+    """
     else:
         return redirect("/", code=302)
 
@@ -53,7 +56,7 @@ def profile():
 @app.route('/check_password', methods=['POST'])
 def check_password():
     password = request.form['password']
-    if password == 'admin':
+    if password == secretsq.pass1:
         return secretsq.secret_cookie
     elif password == 'student':
         return 'successfully_student'
