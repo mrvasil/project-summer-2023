@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 import sqlite3
 import hashlib
 import secretsq
+from datetime import datetime
 app = Flask(__name__)
 
 
@@ -67,10 +68,24 @@ def check_password():
 
 
 
+cyear = datetime.now().year
 Dict = {'v': 'Входное тестирование', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия'}
+Dict2 = {'y1': cyear, 'y2': cyear - 1, 'y3': cyear - 2}
 
-def into_sql(type, year, mark, name):
+def into_sql(type, year, mark, id):
+    conn = sqlite3.connect('data.db')
+    cursor = conn.cursor()
+    print(id[0][0], mark, year, type)
+    cursor.execute(f'''INSERT INTO marks(id,mark,year,type) VALUES({id[0][0]}, {mark}, {year}, "{type}")''')
+    conn.commit()
     pass
+
+def get_id(name,clas):
+    conn = sqlite3.connect('data.db')
+    cursor = conn.cursor()
+    cursor.execute(f'SELECT id FROM students WHERE name="{name}" AND class={clas}')
+    return cursor.fetchall()
+
 
 @app.route('/newmark')
 def newmark():
@@ -78,24 +93,21 @@ def newmark():
     if user == secretsq.secret_cookie:
         name = request.args.get('name')
         clas = request.args.get('class')
-        return render_template('newmark.html', name = name, grade = clas)
-    else:
-        return redirect("/", code=302)
+        return render_template('newmark.html', name = name, grade = clas, year1 = cyear, year2 = cyear - 1, year3 = cyear - 2)
 
 @app.route('/addmark', methods = ['POST', 'GET'])
 def addmark():
-    user = request.cookies.get('user')
-    if user == secretsq.secret_cookie:
-        mark = request.form['mark']
-        type = Dict[request.form['type']]
-        year = request.form['year']
-        name = request.args.get('name')
-        clas = request.args.get('class')
-        into_sql(type, year, mark, name)
-        print(name, clas)
-        return redirect(f'/profile?name={name}&class={clas}', 302)
-    else:
-        return redirect("/", code=302)
+    mark = request.form['mark']
+    type = Dict[request.form.get('type')]
+    year = Dict2[request.form.get('year')]
+    name = request.args.get('name')
+    clas = request.args.get('class')
+    id = get_id(name, clas)
+    into_sql(type, year, mark, id)
+    print(name, clas, year)
+    return redirect(f'/profile?name={name}&class={clas}', 302)
+
+
     
 
 
