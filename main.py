@@ -57,13 +57,15 @@ def profile():
 @app.route('/check_password', methods=['POST'])
 def check_password():
     password = request.form['password']
-    if password == secretsq.pass1:
+    if hashlib.sha1(password.encode()).hexdigest() == secretsq.pass1:
         return secretsq.secret_cookie
-    elif password == 'student':
+    elif hashlib.sha1(password.encode()).hexdigest() == 'student':
         return 'successfully_student'
     else:
         return 'Неверный пароль'
     
+
+
 
 @app.route('/newmark')
 def newmark():
