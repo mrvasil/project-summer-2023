@@ -37,7 +37,7 @@ def index():
 def students():
     user = request.cookies.get('user')
     if user == secretsq.secret_cookie:
-        return render_template('names.html', data=names())
+        return render_template('students.html', data=names())
     elif user == 'successfully_student':
         return """ты ученик)<br>
     <a href="/"> <button style="margin-top: 10px;" onclick="exit()">Выйти из аккаунта</button></a>
@@ -55,31 +55,46 @@ def profile():
     return "Имя: "+name+"<br>Класс: "+class1
 
 @app.route('/check_password', methods=['POST'])
-def check_password():
+def check_password():   
     password = request.form['password']
     if hashlib.sha1(password.encode()).hexdigest() == secretsq.pass1:
         return secretsq.secret_cookie
-    elif hashlib.sha1(password.encode()).hexdigest() == 'student':
-        return 'successfully_student'
     else:
         return 'Неверный пароль'
     
 
 
 
+Dict = {'v': 'Входное тестирование', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия'}
+
+def into_sql(type, year, mark, name):
+    pass
+
 @app.route('/newmark')
 def newmark():
-    name = request.args.get('name')
-    clas = request.args.get('class')
-    return render_template('newmark.html', name = name, grade = clas)
+    user = request.cookies.get('user')
+    if user == secretsq.secret_cookie:
+        name = request.args.get('name')
+        clas = request.args.get('class')
+        return render_template('newmark.html', name = name, grade = clas)
+    else:
+        return redirect("/", code=302)
 
 @app.route('/addmark', methods = ['POST', 'GET'])
 def addmark():
-    mark = int(request.form['mark'])
-    if not (0 < mark <= 10):
-        return 'Введена неверная оценка'
-    return str(mark)
-
+    user = request.cookies.get('user')
+    if user == secretsq.secret_cookie:
+        mark = request.form['mark']
+        type = Dict[request.form['type']]
+        year = request.form['year']
+        name = request.args.get('name')
+        clas = request.args.get('class')
+        into_sql(type, year, mark, name)
+        print(name, clas)
+        return redirect(f'/profile?name={name}&class={clas}', 302)
+    else:
+        return redirect("/", code=302)
+    
 
 
 app.run(port=9127, host='0.0.0.0', debug=True)

@@ -12,7 +12,7 @@
  <button id="submit" type="button">Войти</button>
  <div id="result"></div>
 
-<br>Пароль для учеников: <b>student</b>
+<br><button onclick="without_akk()">Войти как ученик</button> <br> 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <script>
      $(document).ready(function() {
@@ -40,6 +40,12 @@
         });
     });
 });
+
+
+    function without_akk() {
+        window.location.replace('/students');
+        document.cookie = "user=successfully_student"
+    }
  </script>
 </body>
 </html>

@@ -8,7 +8,38 @@
 </head>
 <body>
     Добавление оценки для {{ name }} из {{ grade }} класса
-    <form action="/addmark" method = 'post'>
+    <form action="/addmark?name={{ name }}&class={{ grade }}" method = 'post'>
+        <br>
+        <div class="dropdown">
+        <button class="dropbtn">Выберете год</button>
+          <div class="dropdown-content">
+              <input type = 'radio' name = 'year' value = '2022-2023' id = '2022'>
+              <label for="2022"> 2022-2023</label>
+              <input type = 'radio' name = 'year' value = '2023-2024' id = '2023'>
+              <label for="2023"> 2023-2024</label>
+              <input type = 'radio' name = 'year' value = '2024-2025' id = '2024'>
+              <label for="2024"> 2024-2025</label>
+          </div>
+        <br>
+        </div>
+        <div class="dropdown">
+        <button class="dropbtn">Выберете тип оценки</button>
+          <div class="dropdown-content">
+              <input type = 'radio' name = 'type' value = 'v' id = 'vhod'>
+              <label for="vhod"> Входное тестирование</label>
+              <input type = 'radio' name = 'type' value = 't1' id = 't1'>
+              <label for="t1"> 1 триместровая</label>
+              <input type = 'radio' name = 'type' value = 't2' id = 't2'>
+              <label for="t2"> 2 триметсровая</label>
+              <input type = 'radio' name = 'type' value = 't3' id = 't3'>
+              <label for="t3"> 3 триместровая</label>
+              <input type = 'radio' name = 'type' value = 's1' id = 's1'>
+              <label for="s1"> Зимняя сессия</label>
+              <input type = 'radio' name = 'type' value = 's2' id = 's2'>
+              <label for="s2"> Летняя сессия</label>
+          </div>
+        <br>
+        </div>
         Оценка: <input name = 'mark' type = 'number'>
         <br>
         <input type="submit">
