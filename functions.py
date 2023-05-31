@@ -28,3 +28,9 @@ def get_id(name,clas):
     cursor.execute(f'SELECT id FROM students WHERE name="{name}" AND class={clas}')
     return cursor.fetchall()
 
+def get_name(id):
+    conn = sqlite3.connect('data.db')
+    cursor = conn.cursor()
+    cursor.execute(f'SELECT name, class, english_level, group_num, olympiads FROM students WHERE id={id}')
+    return list(cursor.fetchall())
+

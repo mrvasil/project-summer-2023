@@ -39,15 +39,16 @@ def profile():
 
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
-    cursor.execute(f'SELECT english_level, group_num, id FROM students WHERE name="{name}" AND class={class1}')
+    cursor.execute(f'SELECT english_level, group_num, id, olympiads FROM students WHERE name="{name}" AND class={class1}')
     output = list(cursor.fetchall())
     english_level = output[0][0]
     group = output[0][1]
     id = output[0][2]
+    olympiads = output[0][3]
     if user == secretsq.secret_cookie:
-        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id)
+        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads)
     elif user == 'successfully_student':
-        return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group)
+        return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads)
     else:
         return redirect("/", code=302)
 
@@ -66,9 +67,30 @@ def change_profile():
     user = request.cookies.get('user')
     if user == secretsq.secret_cookie:
         id = request.args.get('id')
-        return render_template('change_profile.html')
+        out = functions.get_name(id)
+        print(out[0][0], out[0][1], out[0][2], out[0][3], out[0][4])
+        return render_template('change_profile.html', name=out[0][0], class1=out[0][1], english_level=out[0][2], group=out[0][3], olympiads=out[0][4], id=id)
     else:
         return redirect("/", code=302)
+    
+@app.route('/change_profile2', methods = ['POST', 'GET'])
+def change_profile2():
+    user = request.cookies.get('user')
+    if user == secretsq.secret_cookie:
+        id = request.args.get('id')
+        name = request.form['name']
+        class1 = request.form['class1']
+        english_level = request.form['level']
+        group = request.form['group']
+        olympiads = request.form['olympiads']
+        conn = sqlite3.connect('data.db')
+        cursor = conn.cursor()
+        cursor.execute(f'''UPDATE students SET name='{name}', class={class1}, english_level='{english_level}', group_num='{group}', olympiads='{olympiads}' WHERE id={id};''')
+        conn.commit()
+        return redirect(f'/profile?name={name}&class={class1}', code=302)
+    else:
+        return redirect("/", code=302)
+
 
 
 
@@ -102,6 +124,8 @@ def addmark():
         return redirect(f'/profile?name={name}&class={clas}', 302)
     else:
         return redirect("/", code=302)
+
+    
 
     
 
