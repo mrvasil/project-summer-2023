@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
+import hashlib
 import secretsq
 app = Flask(__name__)
 
@@ -10,7 +11,7 @@ def names():
     sp=[]
     qn = ["five", "six", "seven", "eight", "nine", "ten", "eleven"]
     for i in range(5, 12):
-        cursor.execute("SELECT name FROM class"+str(i))
+        cursor.execute("SELECT name FROM students WHERE class="+str(i))
         names = list(cursor.fetchall())
         for j in range(len(names)):
             if len(sp)<j+1:
@@ -63,6 +64,19 @@ def check_password():
     else:
         return 'Неверный пароль'
     
+
+@app.route('/newmark')
+def newmark():
+    name = request.args.get('name')
+    clas = request.args.get('class')
+    return render_template('newmark.html', name = name, grade = clas)
+
+@app.route('/addmark', methods = ['POST', 'GET'])
+def addmark():
+    mark = int(request.form['mark'])
+    if not (0 < mark <= 10):
+        return 'Введена неверная оценка'
+    return str(mark)
 
 
 
