@@ -50,7 +50,7 @@ def profile():
     if user == secretsq.secret_cookie:
         return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, data=data)
     elif user == 'successfully_student':
-        return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads)
+        return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads, data=data)
     else:
         return redirect("/", code=302)
 
@@ -127,7 +127,7 @@ def addmark():
         cyear = datetime.now().year
         Dict = {'vb': 'Входное тестирование балл', 'vl': 'Входное тестирование уровень', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия', 'oge': 'Пробник ОГЭ', 'y': 'Годовая'}
         Dict2 = {'y1': f'{cyear} - {cyear+1}', 'y2': f'{cyear-1} - {cyear}', 'y3': f'{cyear-2} - {cyear-1}'}
-        ms = ['v_level', 'v_ball', 't_one', 't_two', 't_tree', 'winter', 'summer', 'test_oge', 'year_mark']
+        ms = ['v_level', 'v_ball', 't_one', 't_two', 't_tHree', 'winter', 'summer', 'test_oge', 'year_mark']
         Dict3 = dict(zip(list(Dict.keys()), ms))
         mark = request.form['mark']
         type = Dict3[request.form.get('type')]
