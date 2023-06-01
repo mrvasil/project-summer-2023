@@ -92,6 +92,18 @@ def change_profile2():
         return redirect("/", code=302)
 
 
+@app.route('/del_user')
+def del_user():
+    user = request.cookies.get('user')
+    if user == secretsq.secret_cookie:
+        id = request.args.get('id')
+        conn = sqlite3.connect('data.db')
+        cursor = conn.cursor() 
+        cursor.execute(f'''DELETE FROM students WHERE id={id};''')
+        conn.commit()
+        return redirect(f'/students', code=302)
+    else:
+        return redirect("/", code=302)
 
 
 
