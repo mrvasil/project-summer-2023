@@ -5,4 +5,58 @@
         <a href="/change_profile?id={{id}}"><button>Изменить профиль</button></a>
 </center>
 
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FyjfHHvmpdMx8pD6qjKUfO1%2FUntitled%3Ftype%3Ddesign%26node-id%3D0%253A1%26t%3DFHUnsOdEbCVknH3D-1" allowfullscreen></iframe>
+<style>
+    table {
+     border-collapse: collapse;
+     width: 100%;
+    }
+    th, td {
+     text-align: left;
+     padding: 8px;
+     border-bottom: 1px solid #ddd;
+     border-top: 1px solid #ddd;
+     border-right: 1px solid #ddd;
+    }
+    th {
+     background-color: #f2f2f2;
+     border-top: none;
+    }
+    center {
+      margin: 20px;
+    }
+</style>
+
+<table id="text">
+    <thead>
+     <tr>
+        <th><center>Год/Тип оценки</center></th>  
+      <th><center>Уровень Входной тест</center></th>
+      <th><center>Балл входной тест</center></th>
+      <th><center>Триместр 1</center></th>
+      <th><center>Триместр 2</center></th>
+      <th><center>Триместр 3</center></th>
+      <th><center>Годовая</center></th>
+      <th><center>Зимняя сессия</center></th>
+      <th><center>Летняя сессия</center></th>
+      <th><center>Пробники ОГЭ</center></th>
+     </tr>
+    </thead>
+    <tbody>
+     {% for item in data %}
+  
+     <tr>
+        <td onclick="location.href='/'"><center><div>{{ item.year }}</div></center></td>
+        <td onclick="location.href='/'"><center><div>{{ item.v_level }}</div></center></td>
+        <td onclick="location.href='/'"><center><div>{{ item.v_ball }}</div></center></td>
+        <td onclick="location.href='/'"><center><div>{{ item.t_one }}</div></center></td>
+        <td onclick="location.href='/'"><center><div>{{ item.t_two }}</div></center></td>
+        <td onclick="location.href='/'"><center><div>{{ item.t_three }}</div></center></td>
+        <td onclick="location.href='/'"><center><div>{{ item.year_mark }}</div></center></td>
+        <td onclick="location.href='/'"><center><div>{{ item.winter }}</div></center></td>
+        <td onclick="location.href='/'"><center><div>{{ item.summer }}</div></center></td>
+        <td onclick="location.href='/'"><center><div>{{ item.test_oge }}</div></center></td>
+     </tr>
+  
+     {% endfor %}
+    </tbody>
+   </table>

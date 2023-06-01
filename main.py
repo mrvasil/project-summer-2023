@@ -45,8 +45,10 @@ def profile():
     group = output[0][1]
     id = output[0][2]
     olympiads = output[0][3]
+
+    data=functions.profile(id)
     if user == secretsq.secret_cookie:
-        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads)
+        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, data=data)
     elif user == 'successfully_student':
         return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads)
     else:
@@ -126,11 +128,11 @@ def addmark():
         Dict = {'v': 'Входное тестирование', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия'}
         Dict2 = {'y1': f'{cyear} - {cyear+1}', 'y2': f'{cyear-1} - {cyear}', 'y3': f'{cyear-2} - {cyear-1}'}
         mark = request.form['mark']
-        type = Dict[request.form.get('type')]
+        type = request.form.get('type')
         year = Dict2[request.form.get('year')]
         name = request.args.get('name')
         clas = request.args.get('class')
-        id = functions.get_id(name, clas)
+        id = functions.get_id(name, clas)   
         functions.into_sql(type, year, mark, id)
         print(name, clas, year)
         return redirect(f'/profile?name={name}&class={clas}', 302)
