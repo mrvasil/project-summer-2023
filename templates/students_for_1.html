@@ -4,29 +4,10 @@
  <title>Таблица учеников</title>
  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
  <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
- <style>
-  table {
-   border-collapse: collapse;
-   width: 100%;
-  }
-  th, td {
-   text-align: left;
-   padding: 8px;
-   border-bottom: 1px solid #ddd;
-   border-top: 1px solid #ddd;
-   border-right: 1px solid #ddd;
-  }
-  th {
-   background-color: #f2f2f2;
-   border-top: none;
-  }
-  center {
-    margin: 20px;
-  }
- </style>
+
 </head>
 <body>
-  <div style="margin: 20px;">
+  <div id="div">
     <input type="text" id="search_words" >
     <button onclick="search()">Поиск</button> <br> 
     <a href="/"> <button style="margin-top: 10px;" onclick="exit()">Выйти из аккаунта</button></a>
