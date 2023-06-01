@@ -125,16 +125,17 @@ def addmark():
     user = request.cookies.get('user')
     if user == secretsq.secret_cookie:
         cyear = datetime.now().year
-        Dict = {'v': 'Входное тестирование', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия'}
+        Dict = {'vb': 'Входное тестирование балл', 'vl': 'Входное тестирование уровень', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия', 'oge': 'Пробник ОГЭ', 'ege': 'Пробник ЕГЭ', 'y': 'Годовая'}
         Dict2 = {'y1': f'{cyear} - {cyear+1}', 'y2': f'{cyear-1} - {cyear}', 'y3': f'{cyear-2} - {cyear-1}'}
+        ms = ['year', 'v_level', 'v_ball', 't_one', 't_two', 't_tree', 'winter', 'summer', 'test_oge']
+        Dict3 = dict(zip(list(Dict.keys()), ms))
         mark = request.form['mark']
-        type = request.form.get('type')
+        type = Dict3[request.form.get('type')]
         year = Dict2[request.form.get('year')]
         name = request.args.get('name')
         clas = request.args.get('class')
-        id = functions.get_id(name, clas)   
+        id = functions.get_id(name, clas)
         functions.into_sql(type, year, mark, id)
-        print(name, clas, year)
         return redirect(f'/profile?name={name}&class={clas}', 302)
     else:
         return redirect("/", code=302)
