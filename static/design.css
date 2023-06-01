@@ -52,6 +52,13 @@ body{
     border-radius: 4px;
     font-size: 85%;
   }
+  input {
+    color: #ffffffdc;
+    background-color: #323332d6;
+    border: solid 2px rgb(26, 26, 26); 
+    border-radius: 4px;
+    font-size: 85%;
+  }
   h3{
     font-size: 180%;
   }

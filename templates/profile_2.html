@@ -1,63 +1,52 @@
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
-<center>
-    <h3>Имя: {{name}}<br> Класс: {{class1}} <br> Уровень англ: {{english_level}} <br> Группа: {{group}} <br> Достижения: {{olympiads}}</h3>
+<title>Проофиль {{name}}</title>
+<body>
+
+
+  <center>
+    <div><h3>{{name}}</h3></div>
+    <div id="div">
+      <strong style="margin: 100px;">
+        {{class1}} класс, Группа {{group}}
+      </strong>
+      <br> 
+      <span style="font-size: 94%;">Уровень: {{english_level}}</span>
     <br>
-        <a href="/newmark?name={{name}}&class={{class1}}"><button>Добавить оценку</button></a>
-</center>
+    </div>
+  </center>
+  <div id="div" >Достижения: {{olympiads}}</div>
 
-<style>
-    table {
-     border-collapse: collapse;
-     width: 100%;
-    }
-    th, td {
-     text-align: left;
-     padding: 8px;
-     border-bottom: 1px solid #ddd;
-     border-top: 1px solid #ddd;
-     border-right: 1px solid #ddd;
-    }
-    th {
-     background-color: #f2f2f2;
-     border-top: none;
-    }
-    center {
-      margin: 20px;
-    }
-</style>
-
-<table id="text">
+  <table id="text">
     <thead>
-     <tr>
+      <tr>
         <th><center>Год/Тип оценки</center></th>  
-      <th><center>Уровень Входной тест</center></th>
-      <th><center>Балл входной тест</center></th>
-      <th><center>Триместр 1</center></th>
-      <th><center>Триместр 2</center></th>
-      <th><center>Триместр 3</center></th>
-      <th><center>Годовая</center></th>
-      <th><center>Зимняя сессия</center></th>
-      <th><center>Летняя сессия</center></th>
-      <th><center>Пробники ОГЭ</center></th>
-     </tr>
+        <th><center>Уровень Входной тест</center></th>
+        <th><center>Балл входной тест</center></th>
+        <th><center>Триместр 1</center></th>
+        <th><center>Триместр 2</center></th>
+        <th><center>Триместр 3</center></th>
+        <th><center>Годовая</center></th>
+        <th><center>Зимняя сессия</center></th>
+        <th><center>Летняя сессия</center></th>
+        <th><center>Пробники ОГЭ</center></th>
+      </tr>
     </thead>
     <tbody>
-     {% for item in data %}
-  
-     <tr>
-        <td onclick="location.href='/'"><center><div>{{ item.year }}</div></center></td>
-        <td onclick="location.href='/'"><center><div>{{ item.v_level }}</div></center></td>
-        <td onclick="location.href='/'"><center><div>{{ item.v_ball }}</div></center></td>
-        <td onclick="location.href='/'"><center><div>{{ item.t_one }}</div></center></td>
-        <td onclick="location.href='/'"><center><div>{{ item.t_two }}</div></center></td>
-        <td onclick="location.href='/'"><center><div>{{ item.t_three }}</div></center></td>
-        <td onclick="location.href='/'"><center><div>{{ item.year_mark }}</div></center></td>
-        <td onclick="location.href='/'"><center><div>{{ item.winter }}</div></center></td>
-        <td onclick="location.href='/'"><center><div>{{ item.summer }}</div></center></td>
-        <td onclick="location.href='/'"><center><div>{{ item.test_oge }}</div></center></td>
-     </tr>
-  
-     {% endfor %}
+    {% for item in data %}
+    <tr>
+      <td onclick="location.href='/'"><center><div>{{ item.year }}</div></center></td>
+      <td onclick="location.href='/'"><center><div>{{ item.v_level }}</div></center></td>
+      <td onclick="location.href='/'"><center><div>{{ item.v_ball }}</div></center></td>
+      <td onclick="location.href='/'"><center><div>{{ item.t_one }}</div></center></td>
+      <td onclick="location.href='/'"><center><div>{{ item.t_two }}</div></center></td>
+      <td onclick="location.href='/'"><center><div>{{ item.t_three }}</div></center></td>
+      <td onclick="location.href='/'"><center><div>{{ item.year_mark }}</div></center></td>
+      <td onclick="location.href='/'"><center><div>{{ item.winter }}</div></center></td>
+      <td onclick="location.href='/'"><center><div>{{ item.summer }}</div></center></td>
+      <td onclick="location.href='/'"><center><div>{{ item.test_oge }}</div></center></td>
+    </tr>
+    {% endfor %}
     </tbody>
-   </table>
+  </table>
+</body>

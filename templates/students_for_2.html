@@ -4,29 +4,10 @@
  <title>Таблица учеников</title>
  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
  <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
- <style>
-  table {
-   border-collapse: collapse;
-   width: 100%;
-  }
-  th, td {
-   text-align: left;
-   padding: 8px;
-   border-bottom: 1px solid #ddd;
-   border-top: 1px solid #ddd;
-   border-right: 1px solid #ddd;
-  }
-  th {
-   background-color: #f2f2f2;
-   border-top: none;
-  }
-  center {
-    margin: 20px;
-  }
- </style>
+
 </head>
 <body>
-  <div style="margin: 20px;">
+  <div id="div">
     <input type="text" id="search_words" >
     <button onclick="search()">Поиск</button> <br> 
     <a href="/"> <button style="margin-top: 10px;" onclick="exit()">Выйти из аккаунта</button></a>
@@ -47,13 +28,13 @@
    {% for item in data %}
 
    <tr>
-    <td><center>{{ item.five }}<br><a href="/profile?name={{ item.five }}&class=5"><br><button>Профиль</button></a></center></td>
-    <td><center>{{ item.six }}<br><a href="/profile?name={{ item.six }}&class=6"><br><button>Профиль</button></a></center></td>
-    <td><center>{{ item.seven }}<br><a href="/profile?name={{ item.seven }}&class=7"><br><button>Профиль</button></a></center></td>
-    <td><center>{{ item.eight }}<br><a href="/profile?name={{ item.eight }}&class=8"><br><button>Профиль</button></a></center></td>
-    <td><center>{{ item.nine }}<br><a href="/profile?name={{ item.nine }}&class=9"><br><button>Профиль</button></a></center></td>
-    <td><center>{{ item.ten }}<br><a href="/profile?name={{ item.ten }}&class=10"><br><button>Профиль</button></a></center></td>
-    <td><center>{{ item.eleven }}<br><a href="/profile?name={{ item.eleven }}&class=11"><br><button>Профиль</button></a></center></td>
+    <td onclick="location.href='/profile?name={{ item.five }}&class=5'"><center><div>{{ item.five }}</div></center></td>
+    <td onclick="location.href='/profile?name={{ item.six }}&class=6'"><center><div>{{ item.six }}</div></center></td>
+    <td onclick="location.href='/profile?name={{ item.seven }}&class=7'"><center><div>{{ item.seven }}</div></center></td>
+    <td onclick="location.href='/profile?name={{ item.eight }}&class=8'"><center><div>{{ item.eight }}</div></center></td>
+    <td onclick="location.href='/profile?name={{ item.nine }}&class=9'"><center><div>{{ item.nine }}</center></td>
+    <td onclick="location.href='/profile?name={{ item.ten }}&class=10'"><center><div>{{ item.ten }}</div></center></td>
+    <td onclick="location.href='/profile?name={{ item.eleven }}&class=11'"><center><div>{{ item.eleven }}</div></center></td>
    </tr>
 
    {% endfor %}
