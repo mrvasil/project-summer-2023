@@ -2,8 +2,9 @@
 <html>
 <head>
     <title>Добавить оценку</title>
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
+    <style>
+
+    </style>
 </head>
 <body>
     <div id = 'markhead'>Добавление оценки для {{ name }} из {{ grade }} класса </div>
@@ -25,12 +26,15 @@
         <span class = 'marklabel'> Выберете тип оценки:</span>
           <span class="dropdown-content">
               <select name="type">
-                  <option selected value="v"> Входное тестирование</option>
+                  <option selected value="vb"> Входное тестирование БАЛЛ</option>
+                  <option value="vl"> Входное тестирование УРОВЕНЬ</option>
                   <option value="t1"> 1 триместровая</option>
                   <option value="t2"> 2 триметсровая</option>
                   <option value="t3"> 3 триместровая</option>
                   <option value="s1"> Зимняя сессия</option>
                   <option value="s2"> Летняя сессия</option>
+                  <option value="oge"> Пробник ОГЭ</option> 
+                  <option value="y"> Годовая</option>
               </select>
           </span>
         <br>

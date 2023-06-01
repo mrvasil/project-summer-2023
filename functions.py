@@ -18,8 +18,11 @@ def names():
 def into_sql(type, year, mark, id):
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
-    print(id[0][0], mark, year, type)
-    cursor.execute(f'''INSERT INTO marks(id,mark,year,type) VALUES({id[0][0]}, {mark}, "{year}", "{type}")''')
+    cursor.execute(f'SELECT v_level FROM marks WHERE id={id[0][0]} AND year="{year}"')
+    if len(cursor.fetchall()) != 0:
+        cursor.execute(f'''UPDATE marks SET {type}="{mark}" WHERE id={id[0][0]} AND year="{year}"''')
+    else:
+        cursor.execute(f'''INSERT INTO marks(id,year,{type}) VALUES({id[0][0]}, "{year}", "{mark}")''')
     conn.commit()
     pass
 
@@ -63,4 +66,4 @@ def profile(id):
         q['test_oge'] = o[0][8]
         sp.append(q)
     return sp
-print(profile(69))
+

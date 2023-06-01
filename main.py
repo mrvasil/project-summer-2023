@@ -125,9 +125,9 @@ def addmark():
     user = request.cookies.get('user')
     if user == secretsq.secret_cookie:
         cyear = datetime.now().year
-        Dict = {'vb': 'Входное тестирование балл', 'vl': 'Входное тестирование уровень', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия', 'oge': 'Пробник ОГЭ', 'ege': 'Пробник ЕГЭ', 'y': 'Годовая'}
+        Dict = {'vb': 'Входное тестирование балл', 'vl': 'Входное тестирование уровень', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия', 'oge': 'Пробник ОГЭ', 'y': 'Годовая'}
         Dict2 = {'y1': f'{cyear} - {cyear+1}', 'y2': f'{cyear-1} - {cyear}', 'y3': f'{cyear-2} - {cyear-1}'}
-        ms = ['year', 'v_level', 'v_ball', 't_one', 't_two', 't_tree', 'winter', 'summer', 'test_oge']
+        ms = ['v_level', 'v_ball', 't_one', 't_two', 't_tree', 'winter', 'summer', 'test_oge', 'year_mark']
         Dict3 = dict(zip(list(Dict.keys()), ms))
         mark = request.form['mark']
         type = Dict3[request.form.get('type')]
@@ -139,6 +139,23 @@ def addmark():
         return redirect(f'/profile?name={name}&class={clas}', 302)
     else:
         return redirect("/", code=302)
+    
+@app.route('/addstudent')
+def new_id():
+    user = request.cookies.get('user')
+    if user == secretsq.secret_cookie:
+        conn = sqlite3.connect('data.db')
+        cursor = conn.cursor()
+        cursor.execute(f'''SELECT MAX(id) FROM students;''')
+        for row in cursor:
+            for elem in row:
+                nid = elem
+        nid += 1
+        cursor.execute(f'''INSERT INTO students (id) VALUES ({nid});''')
+        conn.commit()
+        return redirect(f'/change_profile?id={nid}', 302)
+    else:
+        return redirect(f'/', code=302)
 
     
 

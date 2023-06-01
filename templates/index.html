@@ -3,17 +3,17 @@
 <head>
  <title>Проверка пароля</title>
  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+ <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
  <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
 </head>
 <body>
  <h1>Вход</h1>
- <label>Введите пароль:</label>
+ <label class = 'text1'>Введите пароль:</label>
  <input id="password" type="password">
  <button id="submit" type="button">Войти</button>
  <div id="result"></div>
 
-<br><button onclick="without_akk()">Войти как ученик</button> <br> 
+<br><button onclick="without_akk()" class = 'chbut'><div class = 'text1'>Войти как ученик</div></button> <br>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <script>
      $(document).ready(function() {
