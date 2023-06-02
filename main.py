@@ -47,9 +47,17 @@ def profile():
     olympiads = str(output[0][3]).replace('None', '')
     teacher_name = str(output[0][4]).replace('None', '')
 
+
+    sx = ['Триместр 1', 'Триместр 2', 'Зимняя сессия', 'Триместр 3', 'Годовая', 'Летняя сессия']
+    sy = [8, 7, 8, 10, 9, 9]
+
     data=functions.profile(id)
+
+    x = ['Уровень Входной тест', 'Балл входной тест', 'Триместр 1', 'Триместр 2', 'Триместр 3', 'Годовая', 'Зимняя сессия', 'Летняя сессия']
+    y = list(data[0].values())[1:-1]
+    print(x, y)
     if user == secretsq.secret_cookie:
-        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''))
+        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''), graph_x=x, graph_y=y)
     elif user == 'successfully_student':
         return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads, data=data)
     else:

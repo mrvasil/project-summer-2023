@@ -1,5 +1,6 @@
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <title>Проофиль {{name}}</title>
 <body>
 
@@ -30,7 +31,7 @@
   <p id="div" style="color: aquamarine; position: absolute; left:1%; font-size: 70%;">{{status}}</p>
 
   <form action="/marks?id={{id}}&name={{name}}&class={{class1}}&max_i={{max_i}}" method = 'post'>
-    
+
   <div><input type="submit" value="Применить оценки" style="font-size: 105%;position: absolute; top:35%;"></div>
 
   <table id="text" style="margin-top: 100px;">
@@ -68,4 +69,59 @@
     </tbody>
   </table>
       </form>
+
+      <div style="height: 50vh; width: 100%;">
+        <canvas id="myChart"></canvas>
+      </div>
+
+      <script>
+        const labels = {{ graph_x | tojson}};
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Оценка',
+                backgroundColor: 'rgb(255, 255, 255)',
+                borderColor: 'rgb(255, 255, 255)',
+                data: {{ graph_y | tojson}},
+            }]
+        };
+        const config = {
+            type: 'line',
+            data: data,
+            options: { maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: "blue",
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 5,
+                        ticks: {
+                            color: 'rgb(0, 0, 255)'
+                        },
+                        grid: {
+                            color: "white"
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: 'rgb(0, 0, 255)'
+                        },
+                        grid: {
+                            color: "white"
+                        }
+                    }
+                }
+            }
+        };
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+        </script>
+
+
 </body>
