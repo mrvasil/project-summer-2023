@@ -28,11 +28,11 @@
   </center>
   <div id="div" style="position: absolute; right: 10px;">Достижения: {{olympiads}}</div>
 
-  <p id="div" style="color: aquamarine; position: absolute; left:1%; font-size: 70%;">{{status}}</p>
 
   <form action="/marks?id={{id}}&name={{name}}&class={{class1}}&max_i={{max_i}}" method = 'post'>
 
-  <div><input type="submit" value="Применить оценки" style="font-size: 105%;position: absolute; top:35%;"></div>
+  
+  <div id="div" style="position: absolute; left: 10px; top: 30%"><input type="submit" value="Применить оценки"> <norm-teg style="color: aquamarine; font-size: 70%;">{{status}}</norm-teg></div>
 
   <table id="text" style="margin-top: 100px;">
     <thead>

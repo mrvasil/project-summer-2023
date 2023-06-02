@@ -49,7 +49,7 @@ def profile(id):
     cursor.execute(f'SELECT year FROM marks WHERE id={id}')
     #sp2.append(now_year())
     for i in list(cursor.fetchall()):
-        if (i[0] not in sp2) and (i[0] != now_year()):
+        if (i[0] not in sp2):
             sp2.append(i[0])
     if now_year() not in sp2:
         conn = sqlite3.connect('data.db')
@@ -58,7 +58,6 @@ def profile(id):
         conn.commit()
         backup()
         sp.append({'year': now_year(), 'v_level': '', 'v_ball': '', 't_one': '', 't_two': '', 't_three': '', 'year_mark': '', 'winter': '', 'summer': '', 'test_oge': '', 'i': 0})
-    sp2 = [now_year()] + sp2
     for i in sp2:
         q={}
         cursor.execute(f'''SELECT v_level, v_ball, t_one, t_two, t_three, year_mark, winter, summer, test_oge FROM marks WHERE year='{i}' AND id={id}''')
@@ -92,7 +91,6 @@ def backup():
     sp2 = []
     for i in sp:
         sp2.append(int(i[:-3]))
-    sp2.append(0)
     c = sum([len(files) for r, d, files in os.walk("db_backup/")])
     shutil.copyfile('data.db', f'db_backup/{c+1+min(sp2)}.db')
     if c>=30:
