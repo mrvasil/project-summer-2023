@@ -28,11 +28,11 @@
    {% for item in data %}
 
    <tr>
-    <td onclick="location.href='/profile?name={{ item.five }}&class=5'"><center><div>{{ item.five }}</div></center></td>
+    <td onclick="location.href='/profile?name={{ item.five }}&class=5'"><center><div style="height: 80px">{{ item.five }}</div></center></td>
     <td onclick="location.href='/profile?name={{ item.six }}&class=6'"><center><div>{{ item.six }}</div></center></td>
     <td onclick="location.href='/profile?name={{ item.seven }}&class=7'"><center><div>{{ item.seven }}</div></center></td>
     <td onclick="location.href='/profile?name={{ item.eight }}&class=8'"><center><div>{{ item.eight }}</div></center></td>
-    <td onclick="location.href='/profile?name={{ item.nine }}&class=9'"><center><div>{{ item.nine }}</center></td>
+    <td onclick="location.href='/profile?name={{ item.nine }}&class=9'"><center><div>{{ item.nine }}</div></center></td>
     <td onclick="location.href='/profile?name={{ item.ten }}&class=10'"><center><div>{{ item.ten }}</div></center></td>
     <td onclick="location.href='/profile?name={{ item.eleven }}&class=11'"><center><div>{{ item.eleven }}</div></center></td>
    </tr>
@@ -48,12 +48,13 @@
 
  <script type="text/javascript">
 function search() {
-  var words = search_words.value
-  words = words.replace("<", "");
-  words = words.replace(">", "");
-  var text = document.getElementById('text').innerHTML
-  var result = text.replace(new RegExp(words,'g'), "<div style='background:#ff3200; display:inline;'>" + words + "</div>");
-  document.getElementById('text').innerHTML = result;
+  alert("Поиск пока не работает(");
+  // var words = search_words.value
+  // words = words.replace("<", "");
+  // words = words.replace(">", "");
+  // var text = document.getElementById('text').innerHTML
+  // var result = text.replace(new RegExp(words,'g'), "<div style='background:#ff3200; display:inline;'>" + words + "</div>");
+  // document.getElementById('text').innerHTML = result;
 }
 
 function exit() {
