@@ -49,7 +49,7 @@ def profile():
 
     data=functions.profile(id)
     if user == secretsq.secret_cookie:
-        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data)
+        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''))
     elif user == 'successfully_student':
         return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads, data=data)
     else:
@@ -90,6 +90,7 @@ def change_profile2():
         cursor = conn.cursor()
         cursor.execute(f'''UPDATE students SET name='{name}', class={class1}, english_level='{english_level}', group_num='{group}', olympiads='{olympiads}', teacher_name="{teacher_name}" WHERE id={id};''')
         conn.commit()
+        functions.backup()
         return redirect(f'/profile?name={name}&class={class1}', code=302)
     else:
         return redirect("/", code=302)
@@ -104,6 +105,7 @@ def del_user():
         cursor = conn.cursor() 
         cursor.execute(f'''DELETE FROM students WHERE id={id};''')
         conn.commit()
+        functions.backup()
         return redirect(f'/students', code=302)
     else:
         return redirect("/", code=302)
@@ -115,24 +117,27 @@ def marks():
         id = request.args.get('id')
         name = request.args.get('name')
         class1 = request.args.get('class')
-        year = request.args.get('year')
+        max_i = request.args.get('max_i')
+        for i in range(0, int(max_i)+1):
+            year = request.form['year'+str(i)]
+            v_level = request.form['v_level'+str(i)]
+            v_ball = request.form['v_ball'+str(i)]
+            t_one = request.form['t_one'+str(i)]
+            t_two = request.form['t_two'+str(i)]
+            t_three = request.form['t_three'+str(i)]
+            year_mark = request.form['year_mark'+str(i)]
+            winter = request.form['winter'+str(i)]
+            summer = request.form['summer'+str(i)]
+            test_oge = request.form['test_oge'+str(i)]
 
-        v_level = request.form['v_level']
-        v_ball = request.form['v_ball']
-        t_one = request.form['t_one']
-        t_two = request.form['t_two']
-        t_three = request.form['t_three']
-        year_mark = request.form['year_mark']
-        winter = request.form['winter']
-        summer = request.form['summer']
-        test_oge = request.form['test_oge']
+            conn = sqlite3.connect('data.db')
+            cursor = conn.cursor()
+            cursor.execute(f'''UPDATE marks SET v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', winter='{winter}', summer='{summer}', test_oge='{test_oge}' WHERE id={id} AND year='{year}';''')
+        
+            conn.commit()
+            functions.backup()
 
-        conn = sqlite3.connect('data.db')
-        cursor = conn.cursor()
-        cursor.execute(f'''UPDATE marks SET v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', winter='{winter}', summer='{summer}', test_oge='{test_oge}' WHERE id={id} AND year='{year}';''')
-        conn.commit()
-
-        return redirect(f'/profile?name={name}&class={class1}', code=302)
+        return redirect(f'/profile?name={name}&class={class1}&status=Успешно', code=302)
     else:
         return redirect("/", code=302)
 
@@ -185,6 +190,7 @@ def new_id():
         nid += 1
         cursor.execute(f'''INSERT INTO students (id) VALUES ({nid});''')
         conn.commit()
+        functions.backup()
         return redirect(f'/change_profile?id={nid}', 302)
     else:
         return redirect(f'/', code=302)

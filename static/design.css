@@ -21,22 +21,28 @@ body{
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -khtml-border-radius: 10px;
-    border: 5px solid rgb(15, 15, 15);
+    border: 5px solid #5B5B5B;
     display: block;
     border-collapse: collapse;
-    width: 100%;
+    table-layout: fixed;
+    
   }
   th.blocktext {
     margin-left: auto;
     margin-right: auto;
-    width: 6em
+    width: 6em;
   }
   th, td {
-
     text-align: left;
     border-bottom: 1px solid #464745;
     border-top: 1px solid #f9f6f600;
     border-right: 1px solid #464745;
+  }
+  td.profile_table {
+    width: 10%;
+  }
+  td {
+    width: 16.6%;
   }
   th {
     background-color: #323332d6;
@@ -48,14 +54,14 @@ body{
   button{
     color: #ffffffdc;
     background-color: #323332d6;
-    border: solid 2px rgb(26, 26, 26); 
+    border: solid 2px #5B5B5B; 
     border-radius: 4px;
     font-size: 85%;
   }
   input {
     color: #ffffffdc;
     background-color: #323332d6;
-    border: solid 2px rgb(26, 26, 26); 
+    border: solid 2px #5B5B5B; 
     border-radius: 4px;
     font-size: 85%;
   }
@@ -72,7 +78,7 @@ body{
     background-color: #444444; 
     width: 30%; 
     margin-bottom: 20px;
-    padding: 10px; border: solid 3px rgb(15, 15, 15); border-radius: 6px; color:#ffffffef; 
+    padding: 10px; border: solid 3px #5B5B5B; border-radius: 6px; color:#ffffffef; 
   }
   #button {
     margin-top: 9px;

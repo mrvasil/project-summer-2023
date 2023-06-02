@@ -1,5 +1,7 @@
 import sqlite3
 import datetime
+import shutil
+import os
 def names():
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
@@ -24,6 +26,7 @@ def into_sql(type, year, mark, id):
     else:
         cursor.execute(f'''INSERT INTO marks(id,year,{type}) VALUES({id[0][0]}, "{year}", "{mark}")''')
     conn.commit()
+    backup()
     pass
 
 def get_id(name,clas):
@@ -53,6 +56,7 @@ def profile(id):
         cursor = conn.cursor()
         cursor.execute(f'INSERT INTO marks(id, year) VALUES({id}, "{now_year()}")')
         conn.commit()
+        backup()
         sp.append({'year': now_year(), 'v_level': '', 'v_ball': '', 't_one': '', 't_two': '', 't_three': '', 'year_mark': '', 'winter': '', 'summer': '', 'test_oge': ''})
     for i in sp2:
         q={}
@@ -68,6 +72,7 @@ def profile(id):
         q['winter'] = str(o[0][6]).replace('None', '')
         q['summer'] = str(o[0][7]).replace('None', '')
         q['test_oge'] = str(o[0][8]).replace('None', '')
+        q['i'] = sp2.index(i)
         sp.append(q)
     return sp
 
@@ -81,3 +86,13 @@ def now_year():
     else:
         return f"{year}-{year+1}"
     
+def backup():
+    sp = os.listdir('db_backup/')
+    sp2 = []
+    for i in sp:
+        sp2.append(int(i[:-3]))
+    sp2.append(0)
+    c = sum([len(files) for r, d, files in os.walk("db_backup/")])
+    shutil.copyfile('data.db', f'db_backup/{c+1+min(sp2)}.db')
+    if c>=100:
+        os.remove('db_backup/'+str(min(sp2))+'.db')

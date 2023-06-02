@@ -27,7 +27,12 @@
   </center>
   <div id="div" style="position: absolute; right: 10px;">Достижения: {{olympiads}}</div>
 
-  <!-- <div id="div" style="color: aquamarine; position: absolute; left:1%; top:35%; font-size: 70%;">Успешно{{status}}</div> -->
+  <p id="div" style="color: aquamarine; position: absolute; left:1%; font-size: 70%;">{{status}}</p>
+
+  <form action="/marks?id={{id}}&name={{name}}&class={{class1}}&max_i={{max_i}}" method = 'post'>
+    
+  <div><input type="submit" value="Применить оценки" style="font-size: 105%;position: absolute; top:35%;"></div>
+
   <table id="text" style="margin-top: 100px;">
     <thead>
       <tr>
@@ -41,29 +46,26 @@
         <th><center>Зимняя сессия</center></th>
         <th><center>Летняя сессия</center></th>
         <th><center>Пробники ОГЭ</center></th>
-        <th><center></center></th>
       </tr>
     </thead>
     <tbody>
     {% for item in data %} 
     <tr>
-      <form action="/marks?id={{id}}&name={{name}}&class={{class1}}&year={{item.year}}" method = 'post'>
-      <td><center><div>{{ item.year }}</div></center></td>
-
-      <td><center><div><input name='v_level' id="mark" type="text" value="{{ item.v_level }}"></div></center></td>
-      <td><center><div><input name='v_ball' id="mark" type="text" value="{{ item.v_ball }}"></div></center></td>
-      <td><center><div><input name='t_one' id="mark" type="text" value="{{ item.t_one }}"></div></center></td>
-      <td><center><div><input name='t_two' id="mark" type="text" value="{{ item.t_two }}"></div></center></td>
-      <td><center><div><input name='t_three' id="mark" type="text" value="{{ item.t_three }}"></div></center></td>
-      <td><center><div><input name='year_mark' id="mark" type="text" value="{{ item.year_mark }}"></div></center></td>
-      <td><center><div><input name='winter' id="mark" type="text" value="{{ item.winter }}"></div></center></td>
-      <td><center><div><input name='summer' id="mark" type="text" value="{{ item.summer }}"></div></center></td>
-      <td><center><div><input name='test_oge' id="mark" type="text" value="{{ item.test_oge }}"></div></center></td>
-
-      <td><center><div><input type="submit" value="Применить оценки" style="font-size: 105%;"></div></center></td>
-      </form>
+      
+      <td><center><div><input name='year{{item.i}}' id="mark" type="text" value="{{ item.year }}"  style="width:120px" readonly></div></center></td>
+      <td><center><div><input name='v_level{{item.i}}' id="mark" type="text" value="{{ item.v_level }}"></div></center></td>
+      <td><center><div><input name='v_ball{{item.i}}' id="mark" type="text" value="{{ item.v_ball }}"></div></center></td>
+      <td><center><div><input name='t_one{{item.i}}' id="mark" type="text" value="{{ item.t_one }}"></div></center></td>
+      <td><center><div><input name='t_two{{item.i}}' id="mark" type="text" value="{{ item.t_two }}"></div></center></td>
+      <td><center><div><input name='t_three{{item.i}}' id="mark" type="text" value="{{ item.t_three }}"></div></center></td>
+      <td><center><div><input name='year_mark{{item.i}}' id="mark" type="text" value="{{ item.year_mark }}"></div></center></td>
+      <td><center><div><input name='winter{{item.i}}' id="mark" type="text" value="{{ item.winter }}"></div></center></td>
+      <td><center><div><input name='summer{{item.i}}' id="mark" type="text" value="{{ item.summer }}"></div></center></td>
+      <td><center><div><input name='test_oge{{item.i}}' id="mark" type="text" value="{{ item.test_oge }}"></div></center></td>
+      
     </tr>
     {% endfor %}
     </tbody>
   </table>
+      </form>
 </body>
