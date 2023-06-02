@@ -38,8 +38,8 @@
     <thead>
       <tr>
         <th><center>Год/Тип оценки</center></th>  
-        <th><center>Уровень Входной тест</center></th>
-        <th><center>Балл входной тест</center></th>
+        <th><center>Входной тест (Уровень)</center></th>
+        <th><center>Входной тест (Балл)</center></th>
         <th><center>Триместр 1</center></th>
         <th><center>Триместр 2</center></th>
         <th><center>Триместр 3</center></th>
@@ -82,7 +82,7 @@
                 label: 'Оценка',
                 backgroundColor: 'rgb(255, 255, 255)',
                 borderColor: 'rgb(255, 255, 255)',
-                data: {{ graph_y | tojson}},
+                data: {{ graph_y | tojson}}
             }]
         };
         const config = {
@@ -92,7 +92,7 @@
                 plugins: {
                     legend: {
                         labels: {
-                            color: "blue",
+                            color: "white",
                         }
                     }
                 },
@@ -101,7 +101,7 @@
                         min: 5,
                         ticks: {
                             stepSize: 1,
-                            color: 'rgb(0, 0, 255)'
+                            color: 'white'
                         },
                         grid: {
                             color: "white"
@@ -109,7 +109,7 @@
                     },
                     x: {
                         ticks: {
-                            color: 'rgb(0, 0, 255)'
+                            color: 'white'
                         },
                         grid: {
                             color: "white"
