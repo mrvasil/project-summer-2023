@@ -58,9 +58,9 @@ def profile():
             x.append(i)
             y.append(j)
     if user == secretsq.secret_cookie:
-        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''), graph_x=x, graph_y=y)
+        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''), graph_x=x, graph_y=y, graph_x_=["1"], graph_y_=[1])
     elif user == 'successfully_student':
-        return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads, data=data, graph_x=x, graph_y=y)
+        return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads, teacher_name=teacher_name, data=data, graph_x=x, graph_y=y)
     else:
         return redirect("/", code=302)
 

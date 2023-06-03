@@ -6,10 +6,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
 </head>
 <body>
-    <div id = 'markhead'>Добавление оценки для {{ name }} из {{ grade }} класса </div>
+    <center><div id="div" style="width: 500px; margin-top: 100px;">
+    <div id = 'markhead'>Добавление оценки для <br>{{ name }} из {{ grade }} класса </div>
     <form action="/addmark?name={{ name }}&class={{ grade }}" method = 'post'>
         <br>
-        <div class="dropdown">
+        <div class="dropdown" style="margin-top: 10px;">
             <span class = 'marklabel'>
                 Выберете год:
             </span>
@@ -22,6 +23,7 @@
           </span>
         <br>
         </div>
+        <div style="margin-top: 10px;">
         <span class = 'marklabel'> Выберете тип оценки:</span>
           <span class="dropdown-content">
               <select name="type">
@@ -36,11 +38,14 @@
                   <option value="y"> Годовая</option>
               </select>
           </span>
-        <br>
+        </div>
+        <div style="margin-top: 10px;">
         <span class = 'marklabel'> Оценка: </span>
             <input name = 'mark' type = 'number' id = 'markfield'>
+        </div>
         <br>
         <input type="submit" id = 'but1'>
     </form>
+</div></center>
 </body>
 </html>

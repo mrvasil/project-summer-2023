@@ -73,7 +73,7 @@
             label: 'Оценка',
             backgroundColor: 'rgb(255, 255, 255)',
             borderColor: 'rgb(255, 255, 255)',
-            data: {{ graph_y | tojson}},
+            data: {{ graph_y | tojson}}
         }]
     };
     const config = {
@@ -83,16 +83,16 @@
             plugins: {
                 legend: {
                     labels: {
-                        color: "blue",
+                        color: "white",
                     }
                 }
             },
             scales: {
                 y: {
-                    min: 5,
+                    min: 4,
                     ticks: {
                         stepSize: 1,
-                        color: 'rgb(0, 0, 255)'
+                        color: 'white'
                     },
                     grid: {
                         color: "white"
@@ -100,7 +100,7 @@
                 },
                 x: {
                     ticks: {
-                        color: 'rgb(0, 0, 255)'
+                        color: 'white'
                     },
                     grid: {
                         color: "white"
