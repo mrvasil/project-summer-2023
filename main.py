@@ -153,6 +153,16 @@ def marks():
         return redirect("/", code=302)
 
 
+@app.route('/cancel_backup')
+def cancel_backup():
+    user = request.cookies.get('user')
+    if user == secretsq.secret_cookie:
+        functions.cancel_backup()
+        return redirect(f'/students', code=302)
+    else:
+        return redirect("/", code=302)
+
+
 
 
 

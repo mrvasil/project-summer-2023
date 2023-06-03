@@ -99,4 +99,12 @@ def backup():
     if c>=30:
         os.remove('db_backup/'+str(min(sp2))+'.db')
 
+
+def cancel_backup():
+    sp = os.listdir('db_backup/')
+    sp2 = []
+    for i in sp:
+        sp2.append(int(i[:-3]))
+    shutil.copyfile(f'db_backup/{max(sp2)-1}.db', 'data.db')
+    os.remove(f'db_backup/{max(sp2)}.db')
     
