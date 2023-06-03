@@ -43,13 +43,13 @@
    {% for item in data %}
 
    <tr>
-    <td onclick="location.href='/profile?name={{ item.five }}&class=5'"><center><div style="height: 80px">{{ item.five }}</div></center></td>
-    <td onclick="location.href='/profile?name={{ item.six }}&class=6'" style="background-color: #252525"><center><div>{{ item.six }}</div></center></td>
-    <td onclick="location.href='/profile?name={{ item.seven }}&class=7'"><center><div>{{ item.seven }}</div></center></td>
-    <td onclick="location.href='/profile?name={{ item.eight }}&class=8'" style="background-color: #252525"><center><div>{{ item.eight }}</div></center></td>
-    <td onclick="location.href='/profile?name={{ item.nine }}&class=9'"><center><div>{{ item.nine }}</div></center></td>
-    <td onclick="location.href='/profile?name={{ item.ten }}&class=10'" style="background-color: #252525"><center><div>{{ item.ten }}</div></center></td>
-    <td onclick="location.href='/profile?name={{ item.eleven }}&class=11'"><center><div>{{ item.eleven }}</div></center></td>
+    {% if item.five %}<td onclick="location.href='/profile?name={{ item.five }}&class=5'"><center><div style="height: 80px">{{ item.five }}</div></center></td>{% else %}<td></td>{% endif %}
+    {% if item.six %}<td onclick="location.href='/profile?name={{ item.six }}&class=6'" style="background-color: #252525"><center><div>{{ item.six }}</div></center></td>{% else %}<td></td>{% endif %}
+    {% if item.seven %}<td onclick="location.href='/profile?name={{ item.seven }}&class=7'"><center><div>{{ item.seven }}</div></center></td>{% else %}<td></td>{% endif %}
+    {% if item.eight %}<td onclick="location.href='/profile?name={{ item.eight }}&class=8'" style="background-color: #252525"><center><div>{{ item.eight }}</div></center></td>{% else %}<td></td>{% endif %}
+    {% if item.nine %}<td onclick="location.href='/profile?name={{ item.nine }}&class=9'"><center><div>{{ item.nine }}</div></center></td>{% else %}<td></td>{% endif %}
+    {% if item.ten %}<td onclick="location.href='/profile?name={{ item.ten }}&class=10'" style="background-color: #252525"><center><div>{{ item.ten }}</div></center></td>{% else %}<td></td>{% endif %}
+    {% if item.eleven %}<td onclick="location.href='/profile?name={{ item.eleven }}&class=11'"><center><div>{{ item.eleven }}</div></center></td>{% else %}<td></td>{% endif %}
    </tr>
 
    {% endfor %}
