@@ -2,13 +2,16 @@ import sqlite3
 import datetime
 import shutil
 import os
-def names():
+def names(group):
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
     sp=[]
     qn = ["five", "six", "seven", "eight", "nine", "ten", "eleven"]
     for i in range(5, 12):
-        cursor.execute("SELECT name FROM students WHERE class="+str(i))
+        if group != 'None':
+            cursor.execute(f'''SELECT name FROM students WHERE class={i} AND group_num="{group}"''')
+        else:
+            cursor.execute("SELECT name FROM students WHERE class="+str(i))
         names = list(cursor.fetchall())
         for j in range(len(names)):
             if len(sp)<j+1:

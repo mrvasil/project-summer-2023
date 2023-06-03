@@ -13,6 +13,21 @@
     <a href="/"> <button style="margin-top: 10px;" onclick="exit()">Выйти из аккаунта</button></a>
     <a href="/addstudent"> <button style="margin-top: 10px;">Добавить ученика</button></a>
   </div>
+  <div id="div" style="position: absolute; right: 5px; top: 9px">
+    <form action="/students" method = 'get'>
+      <span style="font-size: 80%;">Сортировать по группе:</span>
+            <span class="dropdown-content">
+                  <select name="group">
+                  <option>A</option>
+                  <option>B</option>
+                  <option>C</option>
+                  <option>D</option>
+                  </select>
+            </span>
+            <input id="submit" type="submit" value="Сортировать" style="margin-left: 15px;">
+    </form>
+    <a href="/students"><button style="margin-top: 10px;">Отменить сортировку</button></a>
+  </div>
  <table id="text">
   <thead>
    <tr>

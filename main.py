@@ -23,10 +23,12 @@ def index():
 @app.route('/students')
 def students():
     user = request.cookies.get('user')
+    group = str(request.args.get('group'))
+    #group='A'
     if user == secretsq.secret_cookie:
-        return render_template('students_for_1.html', data=functions.names())
+        return render_template('students_for_1.html', data=functions.names(group))
     elif user == 'successfully_student':
-        return render_template('students_for_2.html', data=functions.names())
+        return render_template('students_for_2.html', data=functions.names(group))
     else:
         return redirect("/", code=302)
 
