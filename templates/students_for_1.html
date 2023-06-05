@@ -8,15 +8,18 @@
 </head>
 <body>
   <div id="div">
-    <input type="text" id="search_words" >
-    <button onclick="search()">Поиск</button> <br> 
+    <form action="/students" method = 'get'>
+      <input type="submit" value="Поиск">
+            <input type="text" name='search'>
+            
+    </form>  <br> 
     <a href="/"> <button style="margin-top: 10px;" onclick="exit()">Выйти из аккаунта</button></a>
     <a href="/addstudent"> <button style="margin-top: 10px;">Добавить ученика</button></a>
     <a href="/cancel_backup"> <button style="margin-top: 10px;">Отменить последнее действие</button></a>
   </div>
   <div id="div" style="position: absolute; right: 5px; top: 9px">
     <form action="/students" method = 'get'>
-      <span style="font-size: 80%;">Сортировать по группе:</span>
+      <span style="font-size: 80%;">Фильтровать по группе:</span>
             <span class="dropdown-content">
                   <select name="group">
                   <option>A</option>
@@ -25,9 +28,9 @@
                   <option>D</option>
                   </select>
             </span>
-            <input id="submit" type="submit" value="Сортировать" style="margin-left: 15px;">
+            <input id="submit" type="submit" value="Фильтровать" style="margin-left: 15px;">
     </form>
-    <a href="/students"><button style="margin-top: 10px;">Отменить сортировку</button></a>
+    <a href="/students"><button style="margin-top: 10px;">Отменить фильтр</button></a>
   </div>
  <table id="text">
   <thead>
@@ -63,15 +66,6 @@
 
 
  <script type="text/javascript">
-function search() {
-  alert("Встроенный поиск пока не работает( Закройте это окно и нажимете Ctrl+F");
-  // var words = search_words.value
-  // words = words.replace("<", "");
-  // words = words.replace(">", "");
-  // var text = document.getElementById('text').innerHTML
-  // var result = text.replace(new RegExp(words,'g'), "<div style='background:#ff3200; display:inline;'>" + words + "</div>");
-  // document.getElementById('text').innerHTML = result;
-}
 
 function exit() {
   document.cookie = "user=0"

@@ -2,16 +2,16 @@ import sqlite3
 import datetime
 import shutil
 import os
-def names(group):
+def names(group, search):
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
     sp=[]
     qn = ["five", "six", "seven", "eight", "nine", "ten", "eleven"]
     for i in range(5, 12):
         if group != 'None':
-            cursor.execute(f'''SELECT name FROM students WHERE class={i} AND group_num="{group}"''')
+            cursor.execute(f"""SELECT name FROM students WHERE class={i} AND group_num="{group}" AND name LIKE '%{search}%'""")
         else:
-            cursor.execute("SELECT name FROM students WHERE class="+str(i))
+            cursor.execute(f"SELECT name FROM students WHERE class={i} AND name LIKE '%{search}%'")
         names = sorted(list(cursor.fetchall()))
         for j in range(len(names)):
             if len(sp)<j+1:
@@ -77,7 +77,6 @@ def profile(id):
         q['test_oge'] = str(o[0][8]).replace('None', '')
         q['i'] = sp2.index(i)
         sp.append(q)
-    print(sp)
     return sp
 
 def now_year():

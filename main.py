@@ -24,11 +24,11 @@ def index():
 def students():
     user = request.cookies.get('user')
     group = str(request.args.get('group'))
-    #group='A'
+    search = str(request.args.get('search')).replace('None', '')
     if user == secretsq.secret_cookie:
-        return render_template('students_for_1.html', data=functions.names(group))
+        return render_template('students_for_1.html', data=functions.names(group, search))
     elif user == 'successfully_student':
-        return render_template('students_for_2.html', data=functions.names(group))
+        return render_template('students_for_2.html', data=functions.names(group, search))
     else:
         return redirect("/", code=302)
 
