@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import *
 import sqlite3
 import hashlib
 import secretsq
@@ -28,7 +28,15 @@ def students():
     if user == secretsq.secret_cookie:
         return render_template('students_for_1.html', data=functions.names(group, search))
     elif user == 'successfully_student':
-        return render_template('students_for_2.html', data=functions.names(group, search))
+        cookie = str(request.cookies.get('id'))
+        if cookie != 'None':
+            conn = sqlite3.connect('data.db')
+            cursor = conn.cursor()
+            cursor.execute(f'SELECT name, class FROM students WHERE id={cookie}')
+            out = list(cursor.fetchall())
+            return render_template('students_for_2.html', data=functions.names(group, search), name=out[0][0], class1=out[0][1])
+        else:
+            return render_template('students_for_2.html', data=functions.names(group, search))
     else:
         return redirect("/", code=302)
 
@@ -62,7 +70,7 @@ def profile():
     if user == secretsq.secret_cookie:
         return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''), graph_x=x, graph_y=y, graph_x_=["1"], graph_y_=[1])
     elif user == 'successfully_student':
-        return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads, teacher_name=teacher_name, data=data, graph_x=x, graph_y=y)
+        return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads, teacher_name=teacher_name, id=id, data=data, graph_x=x, graph_y=y)
     else:
         return redirect("/", code=302)
 
@@ -151,6 +159,18 @@ def marks():
             functions.backup()
 
         return redirect(f'/profile?name={name}&class={class1}&status=Успешно', code=302)
+    else:
+        return redirect("/", code=302)
+
+
+@app.route('/createcookie')
+def create_cookie():
+    user = request.cookies.get('user')
+    if user == 'successfully_student':
+        id = request.args.get('id')
+        res = make_response(redirect(f'/students', code=302))
+        res.set_cookie('id', id, max_age=9999999999)
+        return res
     else:
         return redirect("/", code=302)
 
