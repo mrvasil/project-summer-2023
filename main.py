@@ -51,7 +51,7 @@ def profile():
 
     data=functions.profile(id)
 
-    old_x = ['Входной тест (Уровень)', 'Входной тест (Балл)', 'Триместр 1', 'Триместр 2', 'Триместр 3', 'Годовая', 'Зимняя сессия', 'Летняя сессия']
+    old_x = ['Входной тест (Уровень)', 'Входной тест (Балл)', 'Триместр 1', 'Зимняя сессия', 'Триместр 2', 'Триместр 3', 'Годовая', 'Летняя сессия']
     old_y = list(data[0].values())[1:-2]
     x = []
     y = []
@@ -134,16 +134,18 @@ def marks():
             v_level = request.form['v_level'+str(i)]
             v_ball = request.form['v_ball'+str(i)]
             t_one = request.form['t_one'+str(i)]
+            winter = request.form['winter'+str(i)]
             t_two = request.form['t_two'+str(i)]
             t_three = request.form['t_three'+str(i)]
             year_mark = request.form['year_mark'+str(i)]
-            winter = request.form['winter'+str(i)]
             summer = request.form['summer'+str(i)]
             test_oge = request.form['test_oge'+str(i)]
 
             conn = sqlite3.connect('data.db')
             cursor = conn.cursor()
-            cursor.execute(f'''UPDATE marks SET v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', winter='{winter}', summer='{summer}', test_oge='{test_oge}' WHERE id={id} AND year='{year}';''')
+            qqq=f'''UPDATE marks SET v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', winter='{winter}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', summer='{summer}', test_oge='{test_oge}' WHERE id={id} AND year='{year}';'''
+            print(qqq)
+            cursor.execute(qqq)
         
             conn.commit()
             functions.backup()

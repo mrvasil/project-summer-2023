@@ -12,7 +12,7 @@ def names(group):
             cursor.execute(f'''SELECT name FROM students WHERE class={i} AND group_num="{group}"''')
         else:
             cursor.execute("SELECT name FROM students WHERE class="+str(i))
-        names = list(cursor.fetchall())
+        names = sorted(list(cursor.fetchall()))
         for j in range(len(names)):
             if len(sp)<j+1:
                 sp.append({})
@@ -60,23 +60,24 @@ def profile(id):
         cursor.execute(f'INSERT INTO marks(id, year) VALUES({id}, "{now_year()}")')
         conn.commit()
         backup()
-        sp.append({'year': now_year(), 'v_level': '', 'v_ball': '', 't_one': '', 't_two': '', 't_three': '', 'year_mark': '', 'winter': '', 'summer': '', 'test_oge': '', 'i': 0})
+        sp.append({'year': now_year(), 'v_level': '', 'v_ball': '', 't_one': '', 'winter': '', 't_two': '', 't_three': '', 'year_mark': '', 'summer': '', 'test_oge': '', 'i': 0})
     for i in sp2:
         q={}
-        cursor.execute(f'''SELECT v_level, v_ball, t_one, t_two, t_three, year_mark, winter, summer, test_oge FROM marks WHERE year='{i}' AND id={id}''')
+        cursor.execute(f'''SELECT v_level, v_ball, t_one, winter, t_two, t_three, year_mark, summer, test_oge FROM marks WHERE year='{i}' AND id={id}''')
         o = list(cursor.fetchall())
         q['year'] = i
         q['v_level'] = str(o[0][0]).replace('None', '')
         q['v_ball'] = str(o[0][1]).replace('None', '')
         q['t_one'] = str(o[0][2]).replace('None', '')
-        q['t_two'] = str(o[0][3]).replace('None', '')
-        q['t_three'] = str(o[0][4]).replace('None', '')
-        q['year_mark'] = str(o[0][5]).replace('None', '')
-        q['winter'] = str(o[0][6]).replace('None', '')
+        q['winter'] = str(o[0][3]).replace('None', '')
+        q['t_two'] = str(o[0][4]).replace('None', '')
+        q['t_three'] = str(o[0][5]).replace('None', '')
+        q['year_mark'] = str(o[0][6]).replace('None', '')
         q['summer'] = str(o[0][7]).replace('None', '')
         q['test_oge'] = str(o[0][8]).replace('None', '')
         q['i'] = sp2.index(i)
         sp.append(q)
+    print(sp)
     return sp
 
 def now_year():

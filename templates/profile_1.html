@@ -41,10 +41,10 @@
         <th><center>Входной тест (Уровень)</center></th>
         <th><center>Входной тест (Балл)</center></th>
         <th><center>Триместр 1</center></th>
+        <th><center>Зимняя сессия</center></th>
         <th><center>Триместр 2</center></th>
         <th><center>Триместр 3</center></th>
         <th><center>Годовая</center></th>
-        <th><center>Зимняя сессия</center></th>
         <th><center>Летняя сессия</center></th>
         <th><center>Пробники ОГЭ</center></th>
       </tr>
@@ -57,10 +57,10 @@
       <td><center><div><input name='v_level{{item.i}}' id="mark" type="text" value="{{ item.v_level }}"></div></center></td>
       <td><center><div><input name='v_ball{{item.i}}' id="mark" type="text" value="{{ item.v_ball }}"></div></center></td>
       <td><center><div><input name='t_one{{item.i}}' id="mark" type="text" value="{{ item.t_one }}"></div></center></td>
+      <td><center><div><input name='winter{{item.i}}' id="mark" type="text" value="{{ item.winter }}"></div></center></td>
       <td><center><div><input name='t_two{{item.i}}' id="mark" type="text" value="{{ item.t_two }}"></div></center></td>
       <td><center><div><input name='t_three{{item.i}}' id="mark" type="text" value="{{ item.t_three }}"></div></center></td>
       <td><center><div><input name='year_mark{{item.i}}' id="mark" type="text" value="{{ item.year_mark }}"></div></center></td>
-      <td><center><div><input name='winter{{item.i}}' id="mark" type="text" value="{{ item.winter }}"></div></center></td>
       <td><center><div><input name='summer{{item.i}}' id="mark" type="text" value="{{ item.summer }}"></div></center></td>
       <td><center><div><input name='test_oge{{item.i}}' id="mark" type="text" value="{{ item.test_oge }}"></div></center></td>
       
@@ -70,41 +70,48 @@
   </table>
       </form>
 
-      <div style="height: 50vh; width: 100%;">
+      <center><div class="graph">
         <canvas id="myChart"></canvas>
-      </div>
-
+      </div></center>
       <script>
         const labels = {{ graph_x | tojson}};
         const data = {
             labels: labels,
             datasets: [{
                 label: 'Оценка',
-                backgroundColor: 'rgb(255, 255, 255)',
-                borderColor: 'rgb(255, 255, 255)',
+                backgroundColor: 'white',
+                borderColor: 'white',
                 data: {{ graph_y | tojson}}
             }]
         };
         const config = {
             type: 'line',
             data: data,
-            options: { maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: "white",
+            options: {
+              layout: {
+                padding: {
+                  left: 50
+                }
+              },
+              maintainAspectRatio: false,
+              animation: false,
+              plugins: {
+                  legend: {
+                      labels: {
+                          color: "white",
                         }
                     }
                 },
                 scales: {
                     y: {
                         min: 4,
+                        max: 10,
                         ticks: {
                             stepSize: 1,
                             color: 'white'
                         },
                         grid: {
-                            color: "white"
+                            color: "rgb(97, 97, 97)"
                         }
                     },
                     x: {
@@ -112,7 +119,7 @@
                             color: 'white'
                         },
                         grid: {
-                            color: "white"
+                            color: "rgb(97, 97, 97)"
                         }
                     }
                 }
@@ -122,7 +129,7 @@
             document.getElementById('myChart'),
             config
         );
-        </script>
+      </script>
 
 <!-- <div style="position: absolute; top: 0px; width: 100%;" id="div"></div> -->
 </body>
