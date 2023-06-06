@@ -16,9 +16,10 @@
     <a href="/"> <button style="margin-top: 10px;" onclick="exit()">Выйти из аккаунта</button></a>
   </div>
 
-  <div id="div" onclick="location.href='/profile?name={{ name }}&class={{class1}}'" style="cursor: pointer">
+  {% if name %}<div id="div" onclick="location.href='/profile?name={{ name }}&class={{class1}}'" style="cursor: pointer">
     Перейти к {{ name }}<br> из {{class1}} класса
   </div>
+  {% else %}{% endif %}
   
   <div id="div" style="position: absolute; right: 5px; top: 9px">
     <form action="/students" method = 'get'>

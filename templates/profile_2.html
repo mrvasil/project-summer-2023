@@ -21,7 +21,12 @@
       </strong>
       <br> 
       <span style="font-size: 94%;">Уровень: {{english_level}}</span><br>
-      <a href="/createcookie?id={{id}}"><button style="cursor: pointer; margin-top: 10px;"> Закрепить себя на главной странице</button></a>
+      <button style="cursor: pointer; margin-top: 10px;" onclick="cookie_1()"> Закрепить себя на главной странице</button>
+      <script>
+        function cookie_1() {
+          document.cookie = "id="+{{id}}
+        }
+      </script>
 
     </div>
   </center>
@@ -62,7 +67,7 @@
   </table>
 
 
-  <center><div class="graph">
+  <center><div style="height: 50vh; width: 100%;">
     <canvas id="myChart"></canvas>
   </div></center>
   <script>

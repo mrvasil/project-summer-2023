@@ -163,17 +163,6 @@ def marks():
         return redirect("/", code=302)
 
 
-@app.route('/createcookie')
-def create_cookie():
-    user = request.cookies.get('user')
-    if user == 'successfully_student':
-        id = request.args.get('id')
-        res = make_response(redirect(f'/students', code=302))
-        res.set_cookie('id', id, max_age=9999999999)
-        return res
-    else:
-        return redirect("/", code=302)
-
 
 @app.route('/cancel_backup')
 def cancel_backup():

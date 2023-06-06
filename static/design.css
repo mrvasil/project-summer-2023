@@ -9,13 +9,6 @@
 .text1 {
   font-size: 18px;
 }
-.graph {
-border: solid 2px #5B5B5B; 
-border-radius: 10px;
-height: 50vh; 
-width: 100%;
-
-}
 
 body{
   color: #ffffffe7;
