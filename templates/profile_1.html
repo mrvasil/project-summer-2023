@@ -2,6 +2,19 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <title>Проофиль {{name}}</title>
+<style>
+  input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; // Yeah, yeah everybody write about it
+}
+
+input[type='number'],
+input[type="number"]:hover,
+input[type="number"]:focus {
+    appearance: none;
+    -moz-appearance: textfield;
+}
+</style>
 <body>
 
   <div id="div" style="position: absolute; left: 10px; width: 40px;" onclick="location.href='/students'">
@@ -56,11 +69,11 @@
       <td><center><div><input name='year{{item.i}}' id="mark" type="text" value="{{ item.year }}"  style="width:120px" readonly></div></center></td>
       <td><center><div><input name='v_level{{item.i}}' id="mark" type="text" value="{{ item.v_level }}"></div></center></td>
       <td><center><div><input name='v_ball{{item.i}}' id="mark" type="text" value="{{ item.v_ball }}"></div></center></td>
-      <td><center><div><input name='t_one{{item.i}}' id="mark" type="text" value="{{ item.t_one }}"></div></center></td>
+      <td><center><div><input name='t_one{{item.i}}' id="mark" type="number" value="{{ item.t_one }}"></div></center></td>
       <td><center><div><input name='winter{{item.i}}' id="mark" type="text" value="{{ item.winter }}"></div></center></td>
-      <td><center><div><input name='t_two{{item.i}}' id="mark" type="text" value="{{ item.t_two }}"></div></center></td>
-      <td><center><div><input name='t_three{{item.i}}' id="mark" type="text" value="{{ item.t_three }}"></div></center></td>
-      <td><center><div><input name='year_mark{{item.i}}' id="mark" type="text" value="{{ item.year_mark }}"></div></center></td>
+      <td><center><div><input name='t_two{{item.i}}' id="mark" type="number" value="{{ item.t_two }}"></div></center></td>
+      <td><center><div><input name='t_three{{item.i}}' id="mark" type="number" value="{{ item.t_three }}"></div></center></td>
+      <td><center><div><input name='year_mark{{item.i}}' id="mark" type="number" value="{{ item.year_mark }}"></div></center></td>
       <td><center><div><input name='summer{{item.i}}' id="mark" type="text" value="{{ item.summer }}"></div></center></td>
       <td><center><div><input name='test_oge{{item.i}}' id="mark" type="text" value="{{ item.test_oge }}"></div></center></td>
       

@@ -181,7 +181,7 @@ def cancel_backup():
 @app.route('/newmark')
 def newmark():
     user = request.cookies.get('user')
-    cyear = datetime.now().year
+    cyear = int(functions.now_year()[:4])
     if user == secretsq.secret_cookie:
         name = request.args.get('name')
         clas = request.args.get('class')
@@ -193,16 +193,19 @@ def newmark():
 def addmark():
     user = request.cookies.get('user')
     if user == secretsq.secret_cookie:
-        cyear = datetime.now().year
+        cyear = int(functions.now_year()[:4])
         Dict = {'vb': 'Входное тестирование балл', 'vl': 'Входное тестирование уровень', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия', 'oge': 'Пробник ОГЭ', 'y': 'Годовая'}
         Dict2 = {'y1': f'{cyear}-{cyear+1}', 'y2': f'{cyear-1}-{cyear}', 'y3': f'{cyear-2}-{cyear-1}'}
-        ms = ['v_level', 'v_ball', 't_one', 't_two', 't_tHree', 'winter', 'summer', 'test_oge', 'year_mark']
+        ms = ['v_level', 'v_ball', 't_one', 't_two', 't_three', 'winter', 'summer', 'test_oge', 'year_mark']
         Dict3 = dict(zip(list(Dict.keys()), ms))
         mark = request.form['mark']
         type = Dict3[request.form.get('type')]
         year = Dict2[request.form.get('year')]
         name = request.args.get('name')
         clas = request.args.get('class')
+        if type == 't_one' or type == 't_two' or type == 't_three' or type == 'year_mark':
+            if not (0 < int(mark) < 11):
+                return redirect(f'/error?type=input&name={name}&class={clas}', 302)
         id = functions.get_id(name, clas)
         functions.into_sql(type, year, mark, id)
         return redirect(f'/profile?name={name}&class={clas}', 302)
@@ -226,6 +229,17 @@ def new_id():
         return redirect(f'/change_profile?id={nid}', 302)
     else:
         return redirect(f'/', code=302)
+    
+@app.route('/error')
+def error():
+    type = request.args.get('type')
+    if type == 'input':
+        name = request.args.get('name')
+        clas = request.args.get('class')
+        return f'''<script>
+        alert("Введена неправильная оценка"); window.location.replace("/profile?name={name}&class={clas}&status=Неуспешно");
+        </script>'''
+
 
     
 
