@@ -4,6 +4,8 @@ import hashlib
 import secretsq
 import functions
 from datetime import datetime
+from werkzeug.exceptions import BadRequest
+
 app = Flask(__name__)
 
 
@@ -174,6 +176,13 @@ def cancel_backup():
         return redirect("/", code=302)
 
 
+@app.errorhandler(BadRequest)
+def handle_bad_request(e):
+    return '<center><h1>Хммм... Странно, произошла какая-то ошибка. Расскажите об этом на странцие <a href="/help">/help</a></h1></center>', 500
+
+
+
+
 
 
 
@@ -245,5 +254,5 @@ def error():
 
     
 
-
+app.register_error_handler(500, handle_bad_request)
 app.run(port=9127, host='0.0.0.0', debug=True)
