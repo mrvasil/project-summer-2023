@@ -150,13 +150,11 @@ def marks():
             year_mark = request.form['year_mark'+str(i)]
             summer = request.form['summer'+str(i)]
             test_oge = request.form['test_oge'+str(i)]
-
             conn = sqlite3.connect('data.db')
             cursor = conn.cursor()
-            qqq=f'''UPDATE marks SET v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', winter='{winter}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', summer='{summer}', test_oge='{test_oge}' WHERE id={id} AND year='{year}';'''
-            print(qqq)
-            cursor.execute(qqq)
-        
+            if v_level != '':
+                cursor.execute(f'''UPDATE students SET english_level='{v_level}' WHERE id="{id}";''')
+            cursor.execute(f'''UPDATE marks SET v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', winter='{winter}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', summer='{summer}', test_oge='{test_oge}' WHERE id={id} AND year='{year}';''')
             conn.commit()
             functions.backup()
 
@@ -205,17 +203,27 @@ def addmark():
         cyear = int(functions.now_year()[:4])
         Dict = {'vb': 'Входное тестирование балл', 'vl': 'Входное тестирование уровень', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия', 'oge': 'Пробник ОГЭ', 'y': 'Годовая'}
         Dict2 = {'y1': f'{cyear}-{cyear+1}', 'y2': f'{cyear-1}-{cyear}', 'y3': f'{cyear-2}-{cyear-1}'}
-        ms = ['v_level', 'v_ball', 't_one', 't_two', 't_three', 'winter', 'summer', 'test_oge', 'year_mark']
+        ms = ['v_ball', 'v_level', 't_one', 't_two', 't_three', 'winter', 'summer', 'test_oge', 'year_mark']
         Dict3 = dict(zip(list(Dict.keys()), ms))
         mark = request.form['mark']
         type = Dict3[request.form.get('type')]
         year = Dict2[request.form.get('year')]
         name = request.args.get('name')
         clas = request.args.get('class')
+        id = functions.get_id(name, clas)
         if type == 't_one' or type == 't_two' or type == 't_three' or type == 'year_mark':
+            if not mark.isdigit():
+                return redirect(f'/error?type=input&name={name}&class={clas}', 302)
             if not (0 < int(mark) < 11):
                 return redirect(f'/error?type=input&name={name}&class={clas}', 302)
-        id = functions.get_id(name, clas)
+        if type == 'v_level':
+            conn = sqlite3.connect('data.db')
+            cursor = conn.cursor()
+            print(f'''UPDATE students SET english_level='{mark}' WHERE id={id[0][0]};''')
+            cursor.execute(
+                f'''UPDATE students SET english_level='{mark}' WHERE id="{id[0][0]}";''')
+            conn.commit()
+            functions.backup()
         functions.into_sql(type, year, mark, id)
         return redirect(f'/profile?name={name}&class={clas}', 302)
     else:
@@ -247,6 +255,10 @@ def error():
         clas = request.args.get('class')
         return f'''<script>
         alert("Введена неправильная оценка"); window.location.replace("/profile?name={name}&class={clas}&status=Неуспешно");
+        </script>'''
+    else:
+        return f'''<script>
+        alert("{type}"); window.location.replace("/");
         </script>'''
 
 
