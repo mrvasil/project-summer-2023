@@ -60,15 +60,8 @@ def profile():
     teacher_name = str(output[0][4]).replace('None', '')
 
     data=functions.profile(id)
-
-    old_x = ['Входной тест (Уровень)', 'Входной тест (Балл)', 'Триместр 1', 'Зимняя сессия', 'Триместр 2', 'Триместр 3', 'Годовая', 'Летняя сессия']
-    old_y = list(data[0].values())[1:-2]
-    x = []
-    y = []
-    for i, j in zip(old_x, old_y):
-        if j != '':
-            x.append(i)
-            y.append(j)
+    data2 = functions.graph(data)
+    x, y = data2[0], data2[1]
     if user == secretsq.secret_cookie:
         return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''), graph_x=x, graph_y=y, graph_x_=["1"], graph_y_=[1])
     elif user == 'successfully_student':
@@ -260,6 +253,34 @@ def error():
         return f'''<script>
         alert("{type}"); window.location.replace("/");
         </script>'''
+    
+
+@app.route('/class')
+def class_graph():
+    clas = request.args.get('grade')
+    old_x = ['Входной тест (Балл)', 'Триместр 1', 'Зимняя сессия', 'Триместр 2', 'Триместр 3',
+             'Годовая', 'Летняя сессия']
+    conn = sqlite3.connect('data.db')
+    cursor = conn.cursor()
+    ms = ['v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer' ]
+    old_y = []
+    ny = functions.now_year()
+    print(ny)
+    for i in ms:
+        select = f'''SELECT AVG(m.{i}) FROM marks m
+            JOIN students s ON s.id = m.id
+            WHERE s.class={clas} AND m.{i} > 0 AND m.year="{ny}";'''
+        cursor.execute(select)
+        old_y.append(cursor.fetchall()[0][0])
+    print(old_y)
+    x = []
+    y = []
+    for i, j in zip(old_x, old_y):
+        if j != '' and j is not None:
+            x.append(i)
+            y.append(j)
+    print(x,y)
+    return render_template('class.html', grade = clas, graph_x = x, graph_y = y)
 
 
     

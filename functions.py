@@ -108,3 +108,16 @@ def cancel_backup():
     shutil.copyfile(f'db_backup/{max(sp2)-1}.db', 'data.db')
     os.remove(f'db_backup/{max(sp2)}.db')
     
+
+def graph(data):
+    d = {'v_ball': 'Входной тест (Уровень)', 'v_level': 'Входной тест (Балл)', 't_one': 'Триместр 1', 'winter': 'Зимняя сессия', 't_two': 'Триместр 2', 't_three': 'Триместр 3', 'year': 'Годовая', 'summer': 'Летняя сессия'}
+    old_x = ['Входной тест (Уровень)', 'Входной тест (Балл)', 'Триместр 1', 'Зимняя сессия', 'Триместр 2', 'Триместр 3', 'Годовая', 'Летняя сессия']
+    old_y = list(data[0].values())[1:-2]
+    x = []
+    y = []
+    for i, j in zip(old_x, old_y):
+        if j != '':
+            x.append(i)
+            y.append(j)
+    
+    return [x, y]
