@@ -206,9 +206,9 @@ def addmark():
         id = functions.get_id(name, clas)
         if type == 't_one' or type == 't_two' or type == 't_three' or type == 'year_mark':
             if not mark.isdigit():
-                return redirect(f'/error?type=input&name={name}&class={clas}', 302)
+                return redirect(f'/profile?name={name}&class={clas}&status=Введена неправильная оценка', 302)
             if not (0 < int(mark) < 11):
-                return redirect(f'/error?type=input&name={name}&class={clas}', 302)
+                return redirect(f'/profile?name={name}&class={clas}&status=Введена неправильная оценка', 302)
         if type == 'v_level':
             conn = sqlite3.connect('data.db')
             cursor = conn.cursor()
@@ -240,19 +240,7 @@ def new_id():
     else:
         return redirect(f'/', code=302)
     
-@app.route('/error')
-def error():
-    type = request.args.get('type')
-    if type == 'input':
-        name = request.args.get('name')
-        clas = request.args.get('class')
-        return f'''<script>
-        alert("Введена неправильная оценка"); window.location.replace("/profile?name={name}&class={clas}&status=Неуспешно");
-        </script>'''
-    else:
-        return f'''<script>
-        alert("{type}"); window.location.replace("/");
-        </script>'''
+
     
 
 @app.route('/class')
