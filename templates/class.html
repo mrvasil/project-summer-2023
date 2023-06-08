@@ -30,11 +30,37 @@
         const data = {
             labels: labels,
             datasets: [{
-                label: 'Оценка',
+                label: 'Класс',
                 backgroundColor: 'white',
                 borderColor: 'white',
-                data: {{ graph_y | tojson}}
-            }]
+                data: {{ graph_y | tojson}},
+                spanGaps: true
+            },{
+                label: 'Группа A',
+                backgroundColor: 'red',
+                borderColor: 'red',
+                data: {{ graph_y2 | tojson}},
+                spanGaps: true
+            },{
+                label: 'Группа B',
+                backgroundColor: 'green',
+                borderColor: 'green',
+                data: {{ graph_y3 | tojson}},
+                spanGaps: true
+            },{
+                label: 'Группа C',
+                backgroundColor: 'blue',
+                borderColor: 'blue',
+                data: {{ graph_y4 | tojson}},
+                spanGaps: true
+            },{
+                label: 'Группа D',
+                backgroundColor: 'yellow',
+                borderColor: 'yellow',
+                data: {{ graph_y5 | tojson}},
+                spanGaps: true
+            }
+            ]
         };
         const config = {
             type: 'line',
@@ -77,6 +103,7 @@
                 }
             }
         };
+
         const myChart = new Chart(
             document.getElementById('myChart'),
             config

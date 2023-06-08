@@ -121,3 +121,35 @@ def graph(data):
             y.append(j)
     
     return [x, y]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def groups(param, clas):
+    conn = sqlite3.connect('data.db')
+    cursor = conn.cursor()
+    old_y = []
+    ny = now_year()
+    ms = ['v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer']
+    for i in ms:
+        select = f'''SELECT AVG(m.{i}) FROM marks m
+            JOIN students s ON s.id = m.id
+            WHERE s.class={clas} {param} AND m.{i} > 0 AND m.year="{ny}";'''
+        #print(select)
+        cursor.execute(select)
+        old_y.append(cursor.fetchall()[0][0])
+    return old_y

@@ -11,17 +11,17 @@
 }
 
 body{
-  color: #ffffffe7;
+  color: #2e2e2ee7;
   font-family: "Roboto", "Arial", sans-serif;
   font-size:  20px;
-  background: #1e1e1e
+  background: #F3F3F3
 }
 table {
   border-radius: 30px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -khtml-border-radius: 10px;
-  border: 5px solid #5B5B5B;
+  border: 2px solid #e9e7f7;
   display: block;
   border-collapse: collapse;
   table-layout: fixed;
@@ -34,18 +34,19 @@ th.blocktext {
 }
 th, td {
   text-align: left;
-  border-bottom: 1px solid #464745;
-  border-top: 1px solid #f9f6f600;
-  border-right: 1px solid #464745;
+  border-bottom: 1px solid #d8cfff;
+  border-top: 1px solid #d8cfff;
+  border-right: 1px solid #d8cfff ;
 }
 td.profile_table {
   width: 10%;
 }
 td {
+  background-color: white;
   width: 16.6%;
 }
 th {
-  background-color: #323332d6;
+  background-color: #D8CFFF;
   border-top: none;
 }
 center {
@@ -53,15 +54,15 @@ center {
 }
 button{
   color: #ffffffdc;
-  background-color: #323332d6;
-  border: solid 2px #5B5B5B; 
+  background-color: #a860d8d6;
+  border: solid 0px #61397cd6; 
   border-radius: 4px;
   font-size: 85%;
 }
 input {
   color: #ffffffdc;
-  background-color: #323332d6;
-  border: solid 2px #5B5B5B; 
+  background-color: #a860d8d6;
+  border: solid 1px #61397cd6; 
   border-radius: 4px;
   font-size: 85%;
 }
@@ -75,17 +76,17 @@ td {
   font-size: 83%
 }
 #div {
-  background-color: #444444; 
+  background-color: #D8CFFF; 
   width: 30%; 
   margin-bottom: 20px;
-  padding: 10px; border: solid 3px #5B5B5B; border-radius: 6px; color:#ffffffef; 
+  padding: 10px; border: solid 0px #e9e7f7; border-radius: 6px; color:#202020ef; 
 }
 #button {
   margin-top: 9px;
 }
 #mark {
-  width: 50px; height: 50px; color: #ffffffdc;
-  background-color: #1e1e1e;
-  border: solid 2px #1e1e1e; 
+  width: 50px; height: 50px; color: #242424dc;
+  background-color: #ffffffd6;
+  border: solid 1px #ffffffd6; 
   font-size: 135%;
 }

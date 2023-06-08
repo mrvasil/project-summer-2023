@@ -260,27 +260,24 @@ def class_graph():
     clas = request.args.get('grade')
     old_x = ['Входной тест (Балл)', 'Триместр 1', 'Зимняя сессия', 'Триместр 2', 'Триместр 3',
              'Годовая', 'Летняя сессия']
-    conn = sqlite3.connect('data.db')
-    cursor = conn.cursor()
     ms = ['v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer' ]
-    old_y = []
-    ny = functions.now_year()
-    print(ny)
-    for i in ms:
-        select = f'''SELECT AVG(m.{i}) FROM marks m
-            JOIN students s ON s.id = m.id
-            WHERE s.class={clas} AND m.{i} > 0 AND m.year="{ny}";'''
-        cursor.execute(select)
-        old_y.append(cursor.fetchall()[0][0])
-    print(old_y)
-    x = []
-    y = []
-    for i, j in zip(old_x, old_y):
-        if j != '' and j is not None:
-            x.append(i)
-            y.append(j)
-    print(x,y)
-    return render_template('class.html', grade = clas, graph_x = x, graph_y = y)
+    ms2 = [' ', ' AND s.group_num="A"', ' AND s.group_num="B"', ' AND s.group_num="C"', ' AND s.group_num="D"']
+    msy = []
+    x1 = ''
+    for ii in ms2:
+        old_y = functions.groups(ii, clas)
+        #print(old_y)
+        x = []
+        if ii == ' ':
+            x1 = x
+        y = []
+        for i, j in zip(old_x, old_y):
+            if j != '':
+                x.append(i)
+                y.append(j)
+        msy.append(y)
+    print(msy)
+    return render_template('class.html', grade = clas, graph_x = x1, graph_y = msy[0], graph_y2 = msy[1], graph_y3 = msy[2], graph_y4 = msy[3], graph_y5 = msy[4])
 
 
     
