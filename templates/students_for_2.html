@@ -7,7 +7,7 @@
 
 </head>
 <body>
-  <div id="div">
+  <div id="div" style=" box-shadow: 0.1em 0.1em 6px rgba(61, 61, 61, 0.24);">
     <form action="/students" method = 'get'>
       <input type="submit" value="Поиск">
             <input type="text" name='search'>
@@ -16,12 +16,12 @@
     <a href="/"> <button style="margin-top: 10px;" onclick="exit()">Выйти из аккаунта</button></a>
   </div>
 
-  {% if name %}<div id="div" onclick="location.href='/profile?name={{ name }}&class={{class1}}'" style="cursor: pointer">
+  {% if name %}<div id="div" onclick="location.href='/profile?name={{ name }}&class={{class1}}'" style="cursor: pointer; font-size: 90%; box-shadow: 0.1em 0.1em 6px rgba(61, 61, 61, 0.199);">
     Перейти к {{ name }}<br> из {{class1}} класса
   </div>
   {% else %}{% endif %}
   
-  <div id="div" style="position: absolute; right: 5px; top: 9px">
+  <div id="div" style="position: absolute; right: 5px; top: 9px; box-shadow: 0.1em 0.1em 4px rgba(61, 61, 61, 0.123);">
     <form action="/students" method = 'get'>
       <span style="font-size: 80%;">Фильтровать по группе:</span>
             <span class="dropdown-content">
@@ -52,11 +52,11 @@
     {% for item in data %}
     <tr>
       {% if item.five %}<td onclick="location.href='/profile?name={{ item.five }}&class=5'" style="cursor: pointer"><center><div>{{ item.five }}</div></center></td>{% else %}<td></td>{% endif %}
-      {% if item.six %}<td onclick="location.href='/profile?name={{ item.six }}&class=6'" style="background-color: #252525; cursor: pointer"><center><div>{{ item.six }}</div></center></td>{% else %}<td style="background-color: #252525"></td>{% endif %}
+      {% if item.six %}<td onclick="location.href='/profile?name={{ item.six }}&class=6'" style="background-color: #fcfbff; cursor: pointer"><center><div>{{ item.six }}</div></center></td>{% else %}<td style="background-color: #fcfbff"></td>{% endif %}
       {% if item.seven %}<td onclick="location.href='/profile?name={{ item.seven }}&class=7'" style="cursor: pointer"><center><div>{{ item.seven }}</div></center></td>{% else %}<td></td>{% endif %}
-      {% if item.eight %}<td onclick="location.href='/profile?name={{ item.eight }}&class=8'" style="background-color: #252525; cursor: pointer"><center><div>{{ item.eight }}</div></center></td>{% else %}<td style="background-color: #252525"></td>{% endif %}
+      {% if item.eight %}<td onclick="location.href='/profile?name={{ item.eight }}&class=8'" style="background-color: #fcfbff; cursor: pointer"><center><div>{{ item.eight }}</div></center></td>{% else %}<td style="background-color: #fcfbff"></td>{% endif %}
       {% if item.nine %}<td onclick="location.href='/profile?name={{ item.nine }}&class=9'" style="cursor: pointer"><center><div>{{ item.nine }}</div></center></td>{% else %}<td></td>{% endif %}
-      {% if item.ten %}<td onclick="location.href='/profile?name={{ item.ten }}&class=10'" style="background-color: #252525; cursor: pointer"><center><div>{{ item.ten }}</div></center></td>{% else %}<td style="background-color: #252525"></td>{% endif %}
+      {% if item.ten %}<td onclick="location.href='/profile?name={{ item.ten }}&class=10'" style="background-color: #fcfbff; cursor: pointer"><center><div>{{ item.ten }}</div></center></td>{% else %}<td style="background-color: #fcfbff"></td>{% endif %}
       {% if item.eleven %}<td onclick="location.href='/profile?name={{ item.eleven }}&class=11'" style="cursor: pointer"><center><div>{{ item.eleven }}</div></center></td>{% else %}<td></td>{% endif %}
      </tr>  
  

@@ -1,6 +1,6 @@
 .chbut{
-  width: 180px;
-  height: 40px;
+  width: 70px;
+  height: 29px;
 }
 
 .text {
@@ -58,16 +58,18 @@ button{
   background-color: #a860d8d6;
   border: solid 0px #61397cd6; 
   border-radius: 4px;
+
   font-size: 85%;
   cursor: pointer
 }
 input {
-  color: #ffffffdc;
+  color: #fffffff6;
   background-color: #a860d8d6;
   border: solid 1px #61397cd6; 
   border-radius: 4px;
   font-size: 85%;
   cursor: pointer
+  
 }
 h3{
   font-size: 180%;
@@ -94,3 +96,8 @@ td {
   font-size: 135%;
 }
 
+input[type='text'] {
+  background-color: aliceblue;
+  border: solid 0.3px #61397cd6; 
+  color:rgba(19, 19, 19, 0.897);
+}
