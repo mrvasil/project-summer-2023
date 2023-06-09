@@ -212,7 +212,6 @@ def addmark():
         if type == 'v_level':
             conn = sqlite3.connect('data.db')
             cursor = conn.cursor()
-            print(f'''UPDATE students SET english_level='{mark}' WHERE id={id[0][0]};''')
             cursor.execute(
                 f'''UPDATE students SET english_level='{mark}' WHERE id="{id[0][0]}";''')
             conn.commit()
@@ -254,7 +253,6 @@ def class_graph():
     x1 = ''
     for ii in ms2:
         old_y = functions.groups(ii, clas)
-        #print(old_y)
         x = []
         if ii == ' ':
             x1 = x
@@ -264,7 +262,6 @@ def class_graph():
                 x.append(i)
                 y.append(j)
         msy.append(y)
-    print(msy)
     return render_template('class.html', grade = clas, graph_x = x1, graph_y = msy[0], graph_y2 = msy[1], graph_y3 = msy[2], graph_y4 = msy[3], graph_y5 = msy[4])
 
 
@@ -273,4 +270,4 @@ def class_graph():
     
 
 app.register_error_handler(500, handle_bad_request)
-app.run(port=9127, host='0.0.0.0', debug=True)
+app.run(port=23002, host='0.0.0.0', debug=True)
