@@ -81,12 +81,22 @@ input[type="number"]:focus {
         const labels = {{ graph_x | tojson}};
         const data = {
             labels: labels,
-            datasets: [{
-                label: 'Оценка',
+            datasets: [
+            {% for i in range(years |length -1) %}
+            {
+                label: '{{years[i]}}',
                 backgroundColor: 'white',
-                borderColor: 'black',
-                data: {{ graph_y | tojson}}
-            }]
+                borderColor: '{{colors[i]}}',
+                data: {{ graphs_y[i] | tojson}}
+            },
+            {% endfor %}
+            {
+                label: '{{years[-1]}}',
+                backgroundColor: 'white',
+                borderColor: '{{colors[-1]}}',
+                data: {{ graphs_y[-1] | tojson}}
+            }
+            ]
         };
         const config = {
             type: 'line',

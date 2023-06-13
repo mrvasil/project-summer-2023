@@ -5,6 +5,7 @@ import secretsq
 import functions
 from datetime import datetime
 from werkzeug.exceptions import BadRequest
+import random
 
 app = Flask(__name__)
 
@@ -59,13 +60,31 @@ def profile():
     olympiads = str(output[0][3]).replace('None', '')
     teacher_name = str(output[0][4]).replace('None', '')
 
-    data=functions.profile(id)
-    data2 = functions.graph(data)
-    x, y = data2[0], data2[1]
+    data = functions.profile(id)
+
+    graphs_y = []
+    years = []
+    graph_x = functions.graph(data[0])[0]
+    for i in range(len(data)):
+        graph = functions.graph(data[i])
+        graphs_y.append(graph[1])
+        years.append(data[i]['year'])
+
+
     if user == secretsq.secret_cookie:
-        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''), graph_x=x, graph_y=y, graph_x_=["1"], graph_y_=[1])
+        return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''),
+                               graph_x=graph_x,
+                               graphs_y=graphs_y,
+                               years=years,
+                               colors=[f'rgb({random.randint(0,190)}, {random.randint(0,190)}, {random.randint(0,190)})' for _ in range(len(years))]
+                               )
     elif user == 'successfully_student':
-        return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads, teacher_name=teacher_name, id=id, data=data, graph_x=x, graph_y=y)
+        return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads, teacher_name=teacher_name, id=id, data=data,
+                               graph_x=graph_x,
+                               graphs_y=graphs_y,
+                               years=years,
+                               colors=[f'rgb({random.randint(0,190)}, {random.randint(0,190)}, {random.randint(0,190)})' for _ in range(len(years))]
+                               )
     else:
         return redirect("/", code=302)
 
@@ -270,4 +289,4 @@ def class_graph():
     
 
 app.register_error_handler(500, handle_bad_request)
-app.run(port=23002, host='0.0.0.0', debug=True)
+app.run(port=23182, host='0.0.0.0', debug=True)
