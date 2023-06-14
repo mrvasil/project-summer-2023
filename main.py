@@ -64,11 +64,17 @@ def profile():
 
     graphs_y = []
     years = []
-    graph_x = functions.graph(data[0])[0]
+    graph_x =  ['Входной тест (Балл)', 'Триместр 1', 'Зимняя сессия', 'Триместр 2', 'Триместр 3', 'Годовая', 'Летняя сессия']
     for i in range(len(data)):
         graph = functions.graph(data[i])
+        graph[0]=graph[0][1:]
+        graph[1]=graph[1][1:]
         graphs_y.append(graph[1])
         years.append(data[i]['year'])
+    for j in data:
+        for i in ['v_level', 'v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer', 'test_oge']:
+            if j[i]=='0':
+                j[i]=''
 
 
 

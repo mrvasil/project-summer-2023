@@ -60,22 +60,25 @@ def profile(id):
         cursor.execute(f'INSERT INTO marks(id, year) VALUES({id}, "{now_year()}")')
         conn.commit()
         backup()
-        sp.append({'year': now_year(), 'v_level': '', 'v_ball': '', 't_one': '', 'winter': '', 't_two': '', 't_three': '', 'year_mark': '', 'summer': '', 'test_oge': '', 'i': 0})
+        sp.append({'year': now_year(), 'v_level': '0', 'v_ball': '0', 't_one': '0', 'winter': '0', 't_two': '0', 't_three': '', 'year_mark': '0', 'summer': '0', 'test_oge': '0', 'i': 0})
     for i in sp2:
         q={}
         cursor.execute(f'''SELECT v_level, v_ball, t_one, winter, t_two, t_three, year_mark, summer, test_oge FROM marks WHERE year='{i}' AND id={id}''')
         o = list(cursor.fetchall())
         q['year'] = i
-        q['v_level'] = str(o[0][0]).replace('None', '')
-        q['v_ball'] = str(o[0][1]).replace('None', '')
-        q['t_one'] = str(o[0][2]).replace('None', '')
-        q['winter'] = str(o[0][3]).replace('None', '')
-        q['t_two'] = str(o[0][4]).replace('None', '')
-        q['t_three'] = str(o[0][5]).replace('None', '')
-        q['year_mark'] = str(o[0][6]).replace('None', '')
-        q['summer'] = str(o[0][7]).replace('None', '')
-        q['test_oge'] = str(o[0][8]).replace('None', '')
+        q['v_level'] = str(o[0][0]).replace('None', '0')
+        q['v_ball'] = str(o[0][1]).replace('None', '0')
+        q['t_one'] = str(o[0][2]).replace('None', '0')
+        q['winter'] = str(o[0][3]).replace('None', '0')
+        q['t_two'] = str(o[0][4]).replace('None', '0')
+        q['t_three'] = str(o[0][5]).replace('None', '0')
+        q['year_mark'] = str(o[0][6]).replace('None', '0')
+        q['summer'] = str(o[0][7]).replace('None', '0')
+        q['test_oge'] = str(o[0][8]).replace('None', '0')
         q['i'] = sp2.index(i)
+        for i in ['v_level', 'v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer', 'test_oge']:
+            if q[i]=='':
+                q[i]='0'
         sp.append(q)
     return sp
 
@@ -108,7 +111,7 @@ def cancel_backup():
     shutil.copyfile(f'db_backup/{max(sp2)-1}.db', 'data.db')
     os.remove(f'db_backup/{max(sp2)}.db')
     
-
+#graph уже не используется
 def graph(data):
     d = {'v_ball': 'Входной тест (Уровень)', 'v_level': 'Входной тест (Балл)', 't_one': 'Триместр 1', 'winter': 'Зимняя сессия', 't_two': 'Триместр 2', 't_three': 'Триместр 3', 'year': 'Годовая', 'summer': 'Летняя сессия'}
     old_x = ['Входной тест (Уровень)', 'Входной тест (Балл)', 'Триместр 1', 'Зимняя сессия', 'Триместр 2', 'Триместр 3', 'Годовая', 'Летняя сессия']
@@ -130,8 +133,8 @@ def middle_of_group(class1, group):
     sp = []
     for i in names:
         cursor.execute(f'SELECT avg({i}) FROM marks WHERE id=(SELECT id FROM students WHERE class={class1} AND group_num="{group}") AND year="{now_year()}"')
-        sp.append(int(list(cursor.fetchall())[0][0]))
-    print(sp)
+        sp.append(list(cursor.fetchall())[0][0])
+
     return sp
 
 
