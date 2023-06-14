@@ -37,7 +37,30 @@ input[type="number"]:focus {
   <form action="/marks?id={{id}}&name={{name}}&class={{class1}}&max_i={{max_i}}" method = 'post'>
   <div id="div" style="position: absolute; left: 10px; top: 193px; width: 66%; "><center style="margin: 0px; font-size: 110%; ">Оценки</center></div>
   <input type="submit" value="Применить оценки" style="position: absolute; left: 69%; top: 193px; width: 15%; height: 45px; border: 0px; font-size: 100%;">
-  {% if status %}<script>alert('{{status}}')</script>{% endif %}
+
+  {% if status %}
+  <script>
+
+      let notification = new Notification("{{status}}", {
+        body: "",
+      });
+      // закрываем уведомление через 5 секунд
+      setTimeout(notification.close.bind(notification), 5000);
+
+    // проверяем поддержку браузером всплывающих уведомлений
+    if (!("Notification" in window)) {
+      alert("Ваш браузер не поддерживает всплывающие уведомления");
+    } else if (Notification.permission !== "granted") {
+      // запрашиваем разрешение пользователя на показ уведомлений
+      Notification.requestPermission().then( function (permission) {
+        if (permission === "granted") {
+          console.log("Разрешение на показ уведомлений получено");
+        }
+      });
+    }
+  </script>  
+  {% endif %}
+
   <table id="text" style="margin-top: 100px;">
     <thead>
       <tr>
