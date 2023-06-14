@@ -123,8 +123,16 @@ def graph(data):
     return [x, y]
 
 
-
-
+def middle_of_group(class1, group):
+    conn = sqlite3.connect('data.db')
+    cursor = conn.cursor()
+    names=['v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer']
+    sp = []
+    for i in names:
+        cursor.execute(f'SELECT avg({i}) FROM marks WHERE id=(SELECT id FROM students WHERE class={class1} AND group_num="{group}") AND year="{now_year()}"')
+        sp.append(int(list(cursor.fetchall())[0][0]))
+    print(sp)
+    return sp
 
 
 

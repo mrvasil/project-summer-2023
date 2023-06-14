@@ -89,8 +89,14 @@
             {
                 label: '{{years[-1]}}',
                 backgroundColor: 'white',
-                borderColor: '{{colors[-1]}}',
+                borderColor: '{{colors[-2]}}',
                 data: {{ graphs_y[-1] | tojson}}
+            },
+            {
+                label: 'Среднее по группе',
+                backgroundColor: 'white',
+                borderColor: '{{colors[-1]}}',
+                data: {{ middle_of_group | tojson}}
             }
             ]
         };

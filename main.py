@@ -71,19 +71,22 @@ def profile():
         years.append(data[i]['year'])
 
 
+
     if user == secretsq.secret_cookie:
         return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''),
                                graph_x=graph_x,
                                graphs_y=graphs_y,
                                years=years,
-                               colors=[f'rgb({random.randint(0,190)}, {random.randint(0,190)}, {random.randint(0,190)})' for _ in range(len(years))]
+                               middle_of_group=functions.middle_of_group(class1, group),
+                               colors=[f'rgb({random.randint(0,190)}, {random.randint(0,190)}, {random.randint(0,190)})' for _ in range(len(years)+1)]
                                )
     elif user == 'successfully_student':
         return render_template('profile_2.html', name=name, class1=class1, english_level=english_level, group=group, olympiads=olympiads, teacher_name=teacher_name, id=id, data=data,
                                graph_x=graph_x,
                                graphs_y=graphs_y,
                                years=years,
-                               colors=[f'rgb({random.randint(0,190)}, {random.randint(0,190)}, {random.randint(0,190)})' for _ in range(len(years))]
+                               middle_of_group=functions.middle_of_group(class1, group),
+                               colors=[f'rgb({random.randint(0,190)}, {random.randint(0,190)}, {random.randint(0,190)})' for _ in range(len(years)+1)]
                                )
     else:
         return redirect("/", code=302)
