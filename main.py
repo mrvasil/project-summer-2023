@@ -286,11 +286,31 @@ def class_graph():
             x1 = x
         y = []
         for i, j in zip(old_x, old_y):
-            if j != '':
+            if j == None:
+                x.append(i)
+                y.append(0)
+            if (j != '') and (j != None):
                 x.append(i)
                 y.append(j)
         msy.append(y)
-    return render_template('class.html', grade = clas, graph_x = x1, graph_y = msy[0], graph_y2 = msy[1], graph_y3 = msy[2], graph_y4 = msy[3], graph_y5 = msy[4])
+    conn = sqlite3.connect('data.db')
+    cursor = conn.cursor()
+    cursor.execute(f'''SELECT count(name) FROM students WHERE class={clas}''')
+    students = cursor.fetchall()[0][0]  
+    cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="A" AND class={clas}''')
+    groupA = cursor.fetchall()[0][0]
+    cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="B" AND class={clas}''')
+    groupB = cursor.fetchall()[0][0]
+    cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="C" AND class={clas}''')
+    groupC = cursor.fetchall()[0][0]
+    cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="D" AND class={clas}''')
+    groupD = cursor.fetchall()[0][0]
+    return render_template('class.html', grade = clas, graph_x = x1, graph_y = msy[0], graph_y2 = msy[1], graph_y3 = msy[2], graph_y4 = msy[3], graph_y5 = msy[4], students=students,
+                           groupA=groupA,
+                           groupB=groupB,
+                           groupC=groupC,
+                           groupD=groupD
+                           )
 
 
     

@@ -18,7 +18,14 @@
 </g>
 </svg>
   </div>
-        <strong> График оценок {{grade}} класса </strong>
+  <div id="div" style="position: absolute; top:10px; right: 20px; width: 300px">
+    Группа A: {{groupA}} ученика(ов)<br>
+    Группа B: {{groupB}} ученика(ов)<br>
+    Группа C: {{groupC}} ученика(ов)<br>
+    Группа D: {{groupD}} ученика(ов)<br>
+</div>
+        <strong> График оценок {{grade}} класса </strong><br>
+        <span>В классе {{students}} ученика(ов)</span>
         <br>
         <br>
         <br>
@@ -32,7 +39,7 @@
             datasets: [{
                 label: 'Класс',
                 backgroundColor: 'white',
-                borderColor: 'white',
+                borderColor: 'black',
                 data: {{ graph_y | tojson}},
                 spanGaps: true
             },{
@@ -76,7 +83,7 @@
               plugins: {
                   legend: {
                       labels: {
-                          color: "white",
+                          color: "black",
                         }
                     }
                 },
@@ -94,7 +101,7 @@
                     },
                     x: {
                         ticks: {
-                            color: 'white'
+                            color: 'black'
                         },
                         grid: {
                             color: "rgb(97, 97, 97)"
