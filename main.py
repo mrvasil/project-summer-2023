@@ -272,45 +272,49 @@ def new_id():
 
 @app.route('/class')
 def class_graph():
-    clas = request.args.get('grade')
-    old_x = ['Входной тест (Балл)', 'Триместр 1', 'Зимняя сессия', 'Триместр 2', 'Триместр 3',
-             'Годовая', 'Летняя сессия']
-    ms = ['v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer' ]
-    ms2 = [' ', ' AND s.group_num="A"', ' AND s.group_num="B"', ' AND s.group_num="C"', ' AND s.group_num="D"']
-    msy = []
-    x1 = ''
-    for ii in ms2:
-        old_y = functions.groups(ii, clas)
-        x = []
-        if ii == ' ':
-            x1 = x
-        y = []
-        for i, j in zip(old_x, old_y):
-            if j == None:
-                x.append(i)
-                y.append(0)
-            if (j != '') and (j != None):
-                x.append(i)
-                y.append(j)
-        msy.append(y)
-    conn = sqlite3.connect('data.db')
-    cursor = conn.cursor()
-    cursor.execute(f'''SELECT count(name) FROM students WHERE class={clas}''')
-    students = cursor.fetchall()[0][0]  
-    cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="A" AND class={clas}''')
-    groupA = cursor.fetchall()[0][0]
-    cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="B" AND class={clas}''')
-    groupB = cursor.fetchall()[0][0]
-    cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="C" AND class={clas}''')
-    groupC = cursor.fetchall()[0][0]
-    cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="D" AND class={clas}''')
-    groupD = cursor.fetchall()[0][0]
-    return render_template('class.html', grade = clas, graph_x = x1, graph_y = msy[0], graph_y2 = msy[1], graph_y3 = msy[2], graph_y4 = msy[3], graph_y5 = msy[4], students=students,
-                           groupA=groupA,
-                           groupB=groupB,
-                           groupC=groupC,
-                           groupD=groupD
-                           )
+    user = request.cookies.get('user')
+    if (user == secretsq.secret_cookie) or (user == 'successfully_student'):
+        clas = request.args.get('grade')
+        old_x = ['Входной тест (Балл)', 'Триместр 1', 'Зимняя сессия', 'Триместр 2', 'Триместр 3',
+                 'Годовая', 'Летняя сессия']
+        ms = ['v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer' ]
+        ms2 = [' ', ' AND s.group_num="A"', ' AND s.group_num="B"', ' AND s.group_num="C"', ' AND s.group_num="D"']
+        msy = []
+        x1 = ''
+        for ii in ms2:
+            old_y = functions.groups(ii, clas)
+            x = []
+            if ii == ' ':
+                x1 = x
+            y = []
+            for i, j in zip(old_x, old_y):
+                if j == None:
+                    x.append(i)
+                    y.append(0)
+                if (j != '') and (j != None):
+                    x.append(i)
+                    y.append(j)
+            msy.append(y)
+        conn = sqlite3.connect('data.db')
+        cursor = conn.cursor()
+        cursor.execute(f'''SELECT count(name) FROM students WHERE class=(?)''', (clas))
+        students = cursor.fetchall()[0][0]  
+        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="A" AND class=(?)''', (clas))
+        groupA = cursor.fetchall()[0][0]
+        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="B" AND class=(?)''', (clas))
+        groupB = cursor.fetchall()[0][0]
+        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="C" AND class=(?)''', (clas))
+        groupC = cursor.fetchall()[0][0]
+        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="D" AND class=(?)''', (clas))
+        groupD = cursor.fetchall()[0][0]
+        return render_template('class.html', grade = clas, graph_x = x1, graph_y = msy[0], graph_y2 = msy[1], graph_y3 = msy[2], graph_y4 = msy[3], graph_y5 = msy[4], students=students,
+                               groupA=groupA,
+                               groupB=groupB,
+                               groupC=groupC,
+                               groupD=groupD
+                               )
+    else:
+        return redirect(f'/', code=302)
 
 
     
@@ -318,4 +322,4 @@ def class_graph():
     
 
 app.register_error_handler(500, handle_bad_request)
-app.run(port=23182, host='0.0.0.0', debug=True)
+app.run(port=23182, host='0.0.0.0')
