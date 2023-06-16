@@ -132,8 +132,8 @@ def middle_of_group(class1, group):
     names=['v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer']
     sp = []
     for i in names:
-        cursor.execute(f'SELECT avg({i}) FROM marks WHERE id=(SELECT id FROM students WHERE class=(?) AND group_num="{group}") AND year="{now_year()}"', (class1,))
-        sp.append(list(cursor.fetchall())[0][0])
+        cursor.execute(f'SELECT avg({i}) FROM marks WHERE id IN (SELECT id FROM students WHERE class=(?) AND group_num="{group}") AND year="{now_year()}"', (class1,))
+        sp.append(str(cursor.fetchone()[0]))
 
     return sp
 
