@@ -200,7 +200,9 @@ def cancel_backup():
 def handle_bad_request(e):
     return '<center><h1>Хммм... Странно, произошла какая-то ошибка. Расскажите об этом на странцие <a href="/help">/help</a></h1></center>', 500
 
-
+@app.route('/help')
+def help():
+    return redirect("https://t.me/alexey_root", 302)
 
 
 
