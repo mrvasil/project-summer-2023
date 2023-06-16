@@ -9,9 +9,9 @@ def names(group, search):
     qn = ["five", "six", "seven", "eight", "nine", "ten", "eleven"]
     for i in range(5, 12):
         if group != 'None':
-            cursor.execute(f"""SELECT name FROM students WHERE class={i} AND group_num="{group}" AND name LIKE '%{search}%'""")
+            cursor.execute(f"""SELECT name FROM students WHERE class=(?) AND group_num=(?) AND name LIKE (?)""", (i, group, '%'+search+'%',))
         else:
-            cursor.execute(f"SELECT name FROM students WHERE class={i} AND name LIKE '%{search}%'")
+            cursor.execute(f"SELECT name FROM students WHERE class=(?) AND name LIKE (?)", (i,'%'+search+'%',))
         names = sorted(list(cursor.fetchall()))
         for j in range(len(names)):
             if len(sp)<j+1:
@@ -132,7 +132,7 @@ def middle_of_group(class1, group):
     names=['v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer']
     sp = []
     for i in names:
-        cursor.execute(f'SELECT avg({i}) FROM marks WHERE id=(SELECT id FROM students WHERE class={class1} AND group_num="{group}") AND year="{now_year()}"')
+        cursor.execute(f'SELECT avg({i}) FROM marks WHERE id=(SELECT id FROM students WHERE class=(?) AND group_num="{group}") AND year="{now_year()}"', (class1,))
         sp.append(list(cursor.fetchall())[0][0])
 
     return sp

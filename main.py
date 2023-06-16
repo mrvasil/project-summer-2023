@@ -35,7 +35,7 @@ def students():
         if cookie != 'None':
             conn = sqlite3.connect('data.db')
             cursor = conn.cursor()
-            cursor.execute(f'SELECT name, class FROM students WHERE id={cookie}')
+            cursor.execute(f'SELECT name, class FROM students WHERE id=(?)', (cookie,))
             out = list(cursor.fetchall())
             return render_template('students_for_2.html', data=functions.names(group, search), name=out[0][0], class1=out[0][1])
         else:
@@ -52,7 +52,7 @@ def profile():
 
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
-    cursor.execute(f'SELECT english_level, group_num, id, olympiads, teacher_name FROM students WHERE name="{name}" AND class={class1}')
+    cursor.execute(f'SELECT english_level, group_num, id, olympiads, teacher_name FROM students WHERE name=(?) AND class=(?)', (name, class1,))
     output = list(cursor.fetchall())
     english_level = str(output[0][0]).replace('None', '')
     group = str(output[0][1]).replace('None', '')
@@ -130,7 +130,8 @@ def change_profile2():
         teacher_name = request.form['teacher_name']
         conn = sqlite3.connect('data.db')
         cursor = conn.cursor()
-        cursor.execute(f'''UPDATE students SET name='{name}', class={class1}, english_level='{english_level}', group_num='{group}', olympiads='{olympiads}', teacher_name="{teacher_name}" WHERE id={id};''')
+        #cursor.execute(f'''UPDATE students SET name='{name}', class={class1}, english_level='{english_level}', group_num='{group}', olympiads='{olympiads}', teacher_name="{teacher_name}" WHERE id={id};''')
+        cursor.execute('''UPDATE students SET name=(?), class=(?), english_level=(?), group_num=(?), olympiads=(?), teacher_name=(?)  WHERE id=(?);''', (name,class1,english_level,group,olympiads,teacher_name,id,))
         conn.commit()
         functions.backup()
         return redirect(f'/profile?name={name}&class={class1}', code=302)
@@ -297,15 +298,15 @@ def class_graph():
             msy.append(y)
         conn = sqlite3.connect('data.db')
         cursor = conn.cursor()
-        cursor.execute(f'''SELECT count(name) FROM students WHERE class=(?)''', (clas))
+        cursor.execute(f'''SELECT count(name) FROM students WHERE class=(?)''', (clas,))
         students = cursor.fetchall()[0][0]  
-        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="A" AND class=(?)''', (clas))
+        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="A" AND class=(?)''', (clas,))
         groupA = cursor.fetchall()[0][0]
-        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="B" AND class=(?)''', (clas))
+        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="B" AND class=(?)''', (clas,))
         groupB = cursor.fetchall()[0][0]
-        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="C" AND class=(?)''', (clas))
+        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="C" AND class=(?)''', (clas,))
         groupC = cursor.fetchall()[0][0]
-        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="D" AND class=(?)''', (clas))
+        cursor.execute(f'''SELECT count(name) FROM students WHERE group_num="D" AND class=(?)''', (clas,))
         groupD = cursor.fetchall()[0][0]
         return render_template('class.html', grade = clas, graph_x = x1, graph_y = msy[0], graph_y2 = msy[1], graph_y3 = msy[2], graph_y4 = msy[3], graph_y5 = msy[4], students=students,
                                groupA=groupA,
