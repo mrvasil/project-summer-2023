@@ -273,6 +273,7 @@ def new_id():
 
     
 
+
 @app.route('/class')
 def class_graph():
     user = request.cookies.get('user')
