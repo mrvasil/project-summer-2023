@@ -1,6 +1,6 @@
 <h3>Привет этот сайт - школьный проект.</h3>
 <a href="https://clck.ru/34crmP">Здесь</a> ты можешь подробнее прочитать об этом
-<br><a href="table3.pythonanywhere.com">Здесь</a> ты можешь посмотреть результат. (pass for teacher: admin)
+<br><a href="http://table3.pythonanywhere.com">Здесь</a> ты можешь посмотреть результат. (pass for teacher: admin)
 <br><br><br><br>
 <h2>Задача:</h2>
 Нам нужно помочь <b>Наталье Сергеевне</b> (нашему преподавателю по английскому языку),<br><br>
