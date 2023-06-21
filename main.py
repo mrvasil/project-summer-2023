@@ -196,9 +196,13 @@ def cancel_backup():
         return redirect("/", code=302)
 
 
-@app.errorhandler(BadRequest)
+@app.errorhandler(500)
 def handle_bad_request(e):
     return '<center><h1>Хммм... Странно, произошла какая-то ошибка. Расскажите об этом на странцие <a href="/help">/help</a></h1></center>', 500
+
+@app.errorhandler(404)
+def handle_not_found():
+    return '<center><h1>Хммм... Странно, такой странички нет(. Если Вы думаете что она должна существовать, расскажите об этом на странцие <a href="/help">/help</a></h1></center>', 404
 
 @app.route('/help')
 def help():
@@ -324,6 +328,6 @@ def class_graph():
     
 
     
-
+app.register_error_handler(404, handle_not_found)
 app.register_error_handler(500, handle_bad_request)
 app.run(port=23182, host='0.0.0.0')
