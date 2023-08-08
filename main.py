@@ -33,7 +33,7 @@ def students():
     elif user == 'successfully_student':
         cookie = str(request.cookies.get('id'))
         if cookie != 'None':
-            conn = sqlite3.connect('data.db')
+            conn = sqlite3.connect('data/data.db')
             cursor = conn.cursor()
             cursor.execute(f'SELECT name, class FROM students WHERE id=(?)', (cookie,))
             out = list(cursor.fetchall())
@@ -50,7 +50,7 @@ def profile():
     class1 = request.args.get('class')
     user = request.cookies.get('user')
 
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('data/data.db')
     cursor = conn.cursor()
     cursor.execute(f'SELECT english_level, group_num, id, olympiads, teacher_name FROM students WHERE name=(?) AND class=(?)', (name, class1,))
     output = list(cursor.fetchall())
@@ -128,7 +128,7 @@ def change_profile2():
         group = request.form['group']
         olympiads = request.form['olympiads']
         teacher_name = request.form['teacher_name']
-        conn = sqlite3.connect('data.db')
+        conn = sqlite3.connect('data/data.db')
         cursor = conn.cursor()
         #cursor.execute(f'''UPDATE students SET name='{name}', class={class1}, english_level='{english_level}', group_num='{group}', olympiads='{olympiads}', teacher_name="{teacher_name}" WHERE id={id};''')
         cursor.execute('''UPDATE students SET name=(?), class=(?), english_level=(?), group_num=(?), olympiads=(?), teacher_name=(?)  WHERE id=(?);''', (name,class1,english_level,group,olympiads,teacher_name,id,))
@@ -144,7 +144,7 @@ def del_user():
     user = request.cookies.get('user')
     if user == secretsq.secret_cookie:
         id = request.args.get('id')
-        conn = sqlite3.connect('data.db')
+        conn = sqlite3.connect('data/data.db')
         cursor = conn.cursor() 
         cursor.execute(f'''DELETE FROM students WHERE id={id};''')
         conn.commit()
@@ -172,7 +172,7 @@ def marks():
             year_mark = request.form['year_mark'+str(i)]
             summer = request.form['summer'+str(i)]
             test_oge = request.form['test_oge'+str(i)]
-            conn = sqlite3.connect('data.db')
+            conn = sqlite3.connect('data/data.db')
             cursor = conn.cursor()
             if v_level != '':
                 cursor.execute(f'''UPDATE students SET english_level='{v_level}' WHERE id="{id}";''')
@@ -245,7 +245,7 @@ def addmark():
             if not (0 < int(mark) < 11):
                 return redirect(f'/profile?name={name}&class={clas}&status=Введена неправильная оценка', 302)
         if type == 'v_level':
-            conn = sqlite3.connect('data.db')
+            conn = sqlite3.connect('data/data.db')
             cursor = conn.cursor()
             cursor.execute(
                 f'''UPDATE students SET english_level='{mark}' WHERE id="{id[0][0]}";''')
@@ -260,7 +260,7 @@ def addmark():
 def new_id():
     user = request.cookies.get('user')
     if user == secretsq.secret_cookie:
-        conn = sqlite3.connect('data.db')
+        conn = sqlite3.connect('data/data.db')
         cursor = conn.cursor()
         cursor.execute(f'''SELECT MAX(id) FROM students;''')
         for row in cursor:
@@ -303,7 +303,7 @@ def class_graph():
                     x.append(i)
                     y.append(j)
             msy.append(y)
-        conn = sqlite3.connect('data.db')
+        conn = sqlite3.connect('data/data.db')
         cursor = conn.cursor()
         cursor.execute(f'''SELECT count(name) FROM students WHERE class=(?)''', (clas,))
         students = cursor.fetchall()[0][0]  

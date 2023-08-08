@@ -3,7 +3,7 @@ import datetime
 import shutil
 import os
 def names(group, search):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('data/data.db')
     cursor = conn.cursor()
     sp=[]
     qn = ["five", "six", "seven", "eight", "nine", "ten", "eleven"]
@@ -21,7 +21,7 @@ def names(group, search):
     return sp
 
 def into_sql(type, year, mark, id):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('data/data.db')
     cursor = conn.cursor()
     cursor.execute(f'SELECT v_level FROM marks WHERE id={id[0][0]} AND year="{year}"')
     if len(cursor.fetchall()) != 0:
@@ -33,19 +33,19 @@ def into_sql(type, year, mark, id):
     pass
 
 def get_id(name,clas):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('data/data.db')
     cursor = conn.cursor()
     cursor.execute(f'SELECT id FROM students WHERE name="{name}" AND class={clas}')
     return cursor.fetchall()
 
 def get_name(id):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('data/data.db')
     cursor = conn.cursor()
     cursor.execute(f'SELECT name, class, english_level, group_num, olympiads, teacher_name FROM students WHERE id={id}')
     return list(cursor.fetchall())
 
 def profile(id):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('data/data.db')
     cursor = conn.cursor()
     sp=[]
     sp2=[]
@@ -55,7 +55,7 @@ def profile(id):
         if (i[0] not in sp2):
             sp2.append(i[0])
     if now_year() not in sp2:
-        conn = sqlite3.connect('data.db')
+        conn = sqlite3.connect('data/data.db')
         cursor = conn.cursor()
         cursor.execute(f'INSERT INTO marks(id, year) VALUES({id}, "{now_year()}")')
         conn.commit()
@@ -98,7 +98,7 @@ def backup():
     for i in sp:
         sp2.append(int(i[:-3]))
     c = sum([len(files) for r, d, files in os.walk("db_backup/")])
-    shutil.copyfile('data.db', f'db_backup/{c+1+min(sp2)}.db')
+    shutil.copyfile('data/data.db', f'db_backup/{c+1+min(sp2)}.db')
     if c>=30:
         os.remove('db_backup/'+str(min(sp2))+'.db')
 
@@ -108,7 +108,7 @@ def cancel_backup():
     sp2 = []
     for i in sp:
         sp2.append(int(i[:-3]))
-    shutil.copyfile(f'db_backup/{max(sp2)-1}.db', 'data.db')
+    shutil.copyfile(f'db_backup/{max(sp2)-1}.db', 'data/data.db')
     os.remove(f'db_backup/{max(sp2)}.db')
     
 #graph уже не используется
@@ -127,7 +127,7 @@ def graph(data):
 
 
 def middle_of_group(class1, group):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('data/data.db')
     cursor = conn.cursor()
     names=['v_ball', 't_one', 'winter', 't_two', 't_three', 'year_mark', 'summer']
     sp = []
@@ -151,7 +151,7 @@ def middle_of_group(class1, group):
 
 
 def groups(param, clas):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('data/data.db')
     cursor = conn.cursor()
     old_y = []
     ny = now_year()
