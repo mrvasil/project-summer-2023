@@ -206,7 +206,7 @@ def handle_not_found():
 
 @app.route('/help')
 def help():
-    return redirect("https://t.me/alexey_root", 302)
+    return redirect("https://t.me/pyweber", 302)
 
 
 
