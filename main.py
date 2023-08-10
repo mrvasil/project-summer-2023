@@ -201,7 +201,7 @@ def handle_bad_request(e):
     return '<center><h1>Хммм... Странно, произошла какая-то ошибка. Расскажите об этом на странцие <a href="/help">/help</a></h1></center>', 500
 
 @app.errorhandler(404)
-def handle_not_found():
+def handle_not_found(e):
     return '<center><h1>Хммм... Странно, такой странички нет(. Если Вы думаете что она должна существовать, расскажите об этом на странцие <a href="/help">/help</a></h1></center>', 404
 
 @app.route('/help')
