@@ -204,6 +204,10 @@ def handle_bad_request(e):
 def handle_not_found(e):
     return '<center><h1>Хммм... Странно, такой странички нет(. Если Вы думаете что она должна существовать, расскажите об этом на странцие <a href="/help">/help</a></h1></center>', 404
 
+@app.route('/admin')
+def help():
+    return "Hello, CTFer!"
+
 @app.route('/help')
 def help():
     return redirect("https://t.me/mrvasil", 302)
