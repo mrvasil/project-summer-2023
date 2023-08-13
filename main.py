@@ -206,7 +206,7 @@ def handle_not_found(e):
 
 @app.route('/admin')
 def admin():
-    return "Hello, CTFer!"
+    return "Hello, CTFer!)"
 
 @app.route('/help')
 def help():
