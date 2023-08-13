@@ -210,7 +210,7 @@ def admin():
 
 @app.route('/help')
 def help():
-    return redirect("https://t.me/mrannv", 302)
+    return redirect("https://t.me/mrvasil", 302)
 
 
 
