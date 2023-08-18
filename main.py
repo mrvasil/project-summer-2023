@@ -6,6 +6,8 @@ import functions
 from datetime import datetime
 from werkzeug.exceptions import BadRequest
 import random
+import os
+import re
 
 app = Flask(__name__)
 
@@ -192,6 +194,16 @@ def cancel_backup():
     if user == secretsq.secret_cookie:
         functions.cancel_backup()
         return redirect(f'/students', code=302)
+    else:
+        return redirect("/", code=302)
+    
+
+@app.route('/logs')
+def logs():
+    user = request.cookies.get('user')
+    if (user == secretsq.secret_cookie) and (request.args.get('p') == secretsq.admin_key):
+        result = "<br>".join(open("logs.txt", "r").readlines())
+        return re.sub(r'\x1b(\[.*?[@-~]|\].*?(\x07|\x1b\\))', '', result)
     else:
         return redirect("/", code=302)
 
