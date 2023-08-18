@@ -6,7 +6,6 @@ import functions
 from datetime import datetime
 from werkzeug.exceptions import BadRequest
 import random
-import os
 import re
 
 app = Flask(__name__)
