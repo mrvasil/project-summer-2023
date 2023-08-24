@@ -4,3 +4,4 @@ test.py
 /.idea
 uploader.py
 logs.txt
+/db-auto-compiler
