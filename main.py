@@ -148,6 +148,7 @@ def del_user():
         conn = sqlite3.connect('data/data.db')
         cursor = conn.cursor() 
         cursor.execute(f'''DELETE FROM students WHERE id={id};''')
+        cursor.execute(f'''DELETE FROM marks WHERE id={id};''')
         conn.commit()
         functions.backup()
         return redirect(f'/students', code=302)
