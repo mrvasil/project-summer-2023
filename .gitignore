@@ -5,3 +5,4 @@ test.py
 uploader.py
 logs.txt
 db-auto-compiler/
+db_logs.txt

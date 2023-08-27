@@ -133,6 +133,7 @@ def change_profile2():
         cursor = conn.cursor()
         #cursor.execute(f'''UPDATE students SET name='{name}', class={class1}, english_level='{english_level}', group_num='{group}', olympiads='{olympiads}', teacher_name="{teacher_name}" WHERE id={id};''')
         cursor.execute('''UPDATE students SET name=(?), class=(?), english_level=(?), group_num=(?), olympiads=(?), teacher_name=(?)  WHERE id=(?);''', (name,class1,english_level,group,olympiads,teacher_name,id,))
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Изменение в профиле ученика:'+' '+ name+', '+class1+', '+english_level+', '+group+', '+olympiads+', '+teacher_name+', '+id)
         conn.commit()
         functions.backup()
         return redirect(f'/profile?name={name}&class={class1}', code=302)
@@ -149,6 +150,7 @@ def del_user():
         cursor = conn.cursor() 
         cursor.execute(f'''DELETE FROM students WHERE id={id};''')
         cursor.execute(f'''DELETE FROM marks WHERE id={id};''')
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Удалён ученик с id: '+id)
         conn.commit()
         functions.backup()
         return redirect(f'/students', code=302)
@@ -179,6 +181,7 @@ def marks():
             if v_level != '':
                 cursor.execute(f'''UPDATE students SET english_level='{v_level}' WHERE id="{id}";''')
             cursor.execute(f'''UPDATE marks SET v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', winter='{winter}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', summer='{summer}', test_oge='{test_oge}' WHERE id={id} AND year='{year}';''')
+            open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+f''' Обновлены оценки у {name}: v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', winter='{winter}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', summer='{summer}', test_oge='{test_oge}', year='{year}' ''')
             conn.commit()
             functions.backup()
 
@@ -202,11 +205,19 @@ def cancel_backup():
 def logs():
     user = request.cookies.get('user')
     if (user == secretsq.secret_cookie) and (request.args.get('p') == secretsq.admin_key):
-        result = "<br>".join(open("logs.txt", "r").readlines())
+        result = "<br>".join(open("data/logs.txt", "r").readlines())
         return re.sub(r'\x1b(\[.*?[@-~]|\].*?(\x07|\x1b\\))', '', result)
     else:
         return redirect("/", code=302)
 
+@app.route('/db_logs')
+def db_logs():
+    user = request.cookies.get('user')
+    if (user == secretsq.secret_cookie) and (request.args.get('p') == secretsq.admin_key):
+        db_logs = "<br>".join(open("data/db_logs.txt", "r").readlines())
+        return db_logs
+    else:
+        return redirect("/", code=302)
 
 @app.errorhandler(500)
 def handle_bad_request(e):
@@ -263,8 +274,8 @@ def addmark():
         if type == 'v_level':
             conn = sqlite3.connect('data/data.db')
             cursor = conn.cursor()
-            cursor.execute(
-                f'''UPDATE students SET english_level='{mark}' WHERE id="{id[0][0]}";''')
+            cursor.execute(f'''UPDATE students SET english_level='{mark}' WHERE id="{id[0][0]}";''')
+            open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Добавлен уровень английского: '+mark+', Имя: '+name+', Класс: '+clas)
             conn.commit()
             functions.backup()
         functions.into_sql(type, year, mark, id)
@@ -284,6 +295,7 @@ def new_id():
                 nid = elem
         nid += 1
         cursor.execute(f'''INSERT INTO students (id) VALUES ({nid});''')
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Добавлен ученик с id: '+str(nid))
         conn.commit()
         functions.backup()
         return redirect(f'/change_profile?id={nid}', 302)
