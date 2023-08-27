@@ -214,7 +214,7 @@ def logs():
 @app.route('/db_logs')
 def db_logs():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.args.get('p') == secretsq.admin_key):
+    if (user == secretsq.secret_cookie):
         db_logs = "<br>".join(open("data/db_logs.txt", "r").readlines())
         return db_logs
     else:
