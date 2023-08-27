@@ -24,10 +24,15 @@ def into_sql(type, year, mark, id):
     conn = sqlite3.connect('data/data.db')
     cursor = conn.cursor()
     cursor.execute(f'SELECT v_level FROM marks WHERE id={id[0][0]} AND year="{year}"')
-    if len(cursor.fetchall()) != 0:
+    output = int(len(cursor.fetchall()))
+    if output != 0:
         cursor.execute(f'''UPDATE marks SET {type}="{mark}" WHERE id={id[0][0]} AND year="{year}"''')
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now())[:-7]+f' Поставлена/обновлена оценка для ученика с id {id[0][0]}: {type}={mark}, Год: {year} ----------way2')
+        print("1")
     else:
         cursor.execute(f'''INSERT INTO marks(id,year,{type}) VALUES({id[0][0]}, "{year}", "{mark}")''')
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now())[:-7]+f' Поставлена оценка для ученика с id {id[0][0]}: {type}={mark}, Год: {year} ----------way2')
+        print("2")
     conn.commit()
     backup()
     pass
@@ -58,6 +63,7 @@ def profile(id):
         conn = sqlite3.connect('data/data.db')
         cursor = conn.cursor()
         cursor.execute(f'INSERT INTO marks(id, year) VALUES({id}, "{now_year()}")')
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now())[:-7]+f' Добавлено поле для оценок для ученика с id {id}, год {now_year()}')
         conn.commit()
         backup()
         sp.append({'year': now_year(), 'v_level': '0', 'v_ball': '0', 't_one': '0', 'winter': '0', 't_two': '0', 't_three': '', 'year_mark': '0', 'summer': '0', 'test_oge': '0', 'i': 0})

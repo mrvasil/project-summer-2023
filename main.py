@@ -180,6 +180,7 @@ def marks():
             cursor = conn.cursor()
             if v_level != '':
                 cursor.execute(f'''UPDATE students SET english_level='{v_level}' WHERE id="{id}";''')
+                open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Добавлен уровень английского: '+v_level+', Имя: '+name+', Класс: '+class1)
             cursor.execute(f'''UPDATE marks SET v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', winter='{winter}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', summer='{summer}', test_oge='{test_oge}' WHERE id={id} AND year='{year}';''')
             open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+f''' Обновлены оценки у {name}: v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', winter='{winter}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', summer='{summer}', test_oge='{test_oge}', year='{year}' ''')
             conn.commit()
@@ -275,7 +276,7 @@ def addmark():
             conn = sqlite3.connect('data/data.db')
             cursor = conn.cursor()
             cursor.execute(f'''UPDATE students SET english_level='{mark}' WHERE id="{id[0][0]}";''')
-            open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Добавлен уровень английского: '+mark+', Имя: '+name+', Класс: '+clas)
+            open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Добавлен уровень английского: '+mark+', Имя: '+name+', Класс: '+clas+' ----------way2')
             conn.commit()
             functions.backup()
         functions.into_sql(type, year, mark, id)
