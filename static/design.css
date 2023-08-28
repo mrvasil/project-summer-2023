@@ -101,3 +101,13 @@ input[type='text'] {
   border: solid 0.3px #61397cd6; 
   color:rgba(19, 19, 19, 0.897);
 }
+
+.footer {
+  padding: 2rem;
+  background: #b072de;
+  color: white;
+  font-size: 70%;
+  margin-left: -1%;
+  margin-top: 40px;
+  margin-bottom: -1%;
+}
