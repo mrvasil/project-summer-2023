@@ -3,7 +3,7 @@ import sqlite3
 import hashlib
 import secretsq
 import functions
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from werkzeug.exceptions import BadRequest
 import random
 import re
@@ -104,7 +104,7 @@ def check_password():
     password = request.form['password']
     if hashlib.sha1(password.encode()).hexdigest() == secretsq.pass1:
         ip_addr = request.remote_addr
-        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Кто-то вошёл в аккаунт учителя, IP: ' + ip_addr)
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' Кто-то вошёл в аккаунт учителя, IP: ' + ip_addr)
         return secretsq.secret_cookie
     else:
         return 'Неверный пароль'
@@ -135,7 +135,7 @@ def change_profile2():
         cursor = conn.cursor()
         #cursor.execute(f'''UPDATE students SET name='{name}', class={class1}, english_level='{english_level}', group_num='{group}', olympiads='{olympiads}', teacher_name="{teacher_name}" WHERE id={id};''')
         cursor.execute('''UPDATE students SET name=(?), class=(?), english_level=(?), group_num=(?), olympiads=(?), teacher_name=(?)  WHERE id=(?);''', (name,class1,english_level,group,olympiads,teacher_name,id,))
-        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Изменение в профиле ученика:'+' '+ name+', '+class1+', '+english_level+', '+group+', '+olympiads+', '+teacher_name+', '+id)
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' Изменение в профиле ученика:'+' '+ name+', '+class1+', '+english_level+', '+group+', '+olympiads+', '+teacher_name+', '+id)
         conn.commit()
         functions.backup()
         return redirect(f'/profile?name={name}&class={class1}', code=302)
@@ -152,7 +152,7 @@ def del_user():
         cursor = conn.cursor() 
         cursor.execute(f'''DELETE FROM students WHERE id={id};''')
         cursor.execute(f'''DELETE FROM marks WHERE id={id};''')
-        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Удалён ученик с id: '+id)
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' Удалён ученик с id: '+id)
         conn.commit()
         functions.backup()
         return redirect(f'/students', code=302)
@@ -182,9 +182,9 @@ def marks():
             cursor = conn.cursor()
             if v_level != '':
                 cursor.execute(f'''UPDATE students SET english_level='{v_level}' WHERE id="{id}";''')
-                open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Добавлен уровень английского: '+v_level+', Имя: '+name+', Класс: '+class1)
+                open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' Добавлен уровень английского: '+v_level+', Имя: '+name+', Класс: '+class1)
             cursor.execute(f'''UPDATE marks SET v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', winter='{winter}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', summer='{summer}', test_oge='{test_oge}' WHERE id={id} AND year='{year}';''')
-            open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+f''' Обновлены оценки у {name}: v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', winter='{winter}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', summer='{summer}', test_oge='{test_oge}', year='{year}' ''')
+            open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+f''' Обновлены оценки у {name}: v_level='{v_level}', v_ball='{v_ball}', t_one='{t_one}', winter='{winter}', t_two='{t_two}', t_three='{t_three}', year_mark='{year_mark}', summer='{summer}', test_oge='{test_oge}', year='{year}' ''')
             conn.commit()
             functions.backup()
 
@@ -278,7 +278,7 @@ def addmark():
             conn = sqlite3.connect('data/data.db')
             cursor = conn.cursor()
             cursor.execute(f'''UPDATE students SET english_level='{mark}' WHERE id="{id[0][0]}";''')
-            open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Добавлен уровень английского: '+mark+', Имя: '+name+', Класс: '+clas+' ----------way2')
+            open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' Добавлен уровень английского: '+mark+', Имя: '+name+', Класс: '+clas+' ----------way2')
             conn.commit()
             functions.backup()
         functions.into_sql(type, year, mark, id)
@@ -298,7 +298,7 @@ def new_id():
                 nid = elem
         nid += 1
         cursor.execute(f'''INSERT INTO students (id) VALUES ({nid});''')
-        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Добавлен ученик с id: '+str(nid))
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' Добавлен ученик с id: '+str(nid))
         conn.commit()
         functions.backup()
         return redirect(f'/change_profile?id={nid}', 302)

@@ -27,11 +27,11 @@ def into_sql(type, year, mark, id):
     output = int(len(cursor.fetchall()))
     if output != 0:
         cursor.execute(f'''UPDATE marks SET {type}="{mark}" WHERE id={id[0][0]} AND year="{year}"''')
-        open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now())[:-7]+f' Поставлена/обновлена оценка для ученика с id {id[0][0]}: {type}={mark}, Год: {year} ----------way2')
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=+3))))[:-13]+f' Поставлена/обновлена оценка для ученика с id {id[0][0]}: {type}={mark}, Год: {year} ----------way2')
         print("1")
     else:
         cursor.execute(f'''INSERT INTO marks(id,year,{type}) VALUES({id[0][0]}, "{year}", "{mark}")''')
-        open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now())[:-7]+f' Поставлена оценка для ученика с id {id[0][0]}: {type}={mark}, Год: {year} ----------way2')
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=+3))))[:-13]+f' Поставлена оценка для ученика с id {id[0][0]}: {type}={mark}, Год: {year} ----------way2')
         print("2")
     conn.commit()
     backup()
@@ -63,7 +63,7 @@ def profile(id):
         conn = sqlite3.connect('data/data.db')
         cursor = conn.cursor()
         cursor.execute(f'INSERT INTO marks(id, year) VALUES({id}, "{now_year()}")')
-        open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now())[:-7]+f' Добавлено поле для оценок для ученика с id {id}, год {now_year()}')
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=+3))))[:-13]+f' Добавлено поле для оценок для ученика с id {id}, год {now_year()}')
         conn.commit()
         backup()
         sp.append({'year': now_year(), 'v_level': '0', 'v_ball': '0', 't_one': '0', 'winter': '0', 't_two': '0', 't_three': '', 'year_mark': '0', 'summer': '0', 'test_oge': '0', 'i': 0})
@@ -116,7 +116,7 @@ def cancel_backup():
         sp2.append(int(i[:-3]))
     shutil.copyfile(f'db_backup/{max(sp2)-1}.db', 'data/data.db')
     os.remove(f'db_backup/{max(sp2)}.db')
-    open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now())[:-7]+f' Действие отменено')
+    open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=+3))))[:-13]+f' Действие отменено')
     
 #graph уже не используется
 def graph(data):
