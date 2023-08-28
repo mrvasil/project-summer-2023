@@ -138,7 +138,7 @@ def change_profile2():
         open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' Изменение в профиле ученика:'+' '+ name+', '+class1+', '+english_level+', '+group+', '+olympiads+', '+teacher_name+', '+id)
         conn.commit()
         functions.backup()
-        return redirect(f'/profile?name={name}&class={class1}', code=302)
+        return redirect(f'/change_profile?id={id}', code=302)
     else:
         return redirect("/", code=302)
 
