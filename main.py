@@ -104,7 +104,7 @@ def check_password():
     password = request.form['password']
     if hashlib.sha1(password.encode()).hexdigest() == secretsq.pass1:
         ip_addr = request.remote_addr
-        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' Кто-то вошёл в аккаунт учителя, IP: ' + ip_addr)
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' <span style="color: red">Кто-то вошёл в аккаунт учителя</span>, IP: ' + ip_addr)
         return secretsq.secret_cookie
     else:
         return 'Неверный пароль'
