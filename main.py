@@ -103,6 +103,8 @@ def profile():
 def check_password():   
     password = request.form['password']
     if hashlib.sha1(password.encode()).hexdigest() == secretsq.pass1:
+        ip_addr = request.remote_addr
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now())[:-7]+' Кто-то вошёл в аккаунт учителя, IP: ' + ip_addr)
         return secretsq.secret_cookie
     else:
         return 'Неверный пароль'

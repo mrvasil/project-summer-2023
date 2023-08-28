@@ -116,6 +116,7 @@ def cancel_backup():
         sp2.append(int(i[:-3]))
     shutil.copyfile(f'db_backup/{max(sp2)-1}.db', 'data/data.db')
     os.remove(f'db_backup/{max(sp2)}.db')
+    open("data/db_logs.txt", "a+").write('\n'+str(datetime.datetime.now())[:-7]+f' Действие отменено')
     
 #graph уже не используется
 def graph(data):

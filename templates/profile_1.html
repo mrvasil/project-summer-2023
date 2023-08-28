@@ -35,12 +35,7 @@ input[type="number"]:focus {
   <a href="/newmark?name={{name}}&class={{class1}}" ><button id="button" style="position: absolute; left: 84.6%; top: 184px; width: 40px; height: 45px; border: 0px; font-size: 100%;" >+</button></a>  
   <button style="position: absolute; left: 88%; top: 193px; width: 11.3%; height: 44px; cursor: pointer; font-size: 70%; box-shadow: 0.1em 0.2em 5px rgba(61, 61, 61, 0.356); padding-right: 10px;" onclick = "location.href='#achievements'">Достижения</button>
   <form action="/marks?id={{id}}&name={{name}}&class={{class1}}&max_i={{max_i}}" method = 'post'>
-  <div id="div" style="position: absolute; left: 10px; top: 193px; width: 66%; "><span style="margin: 54px; font-size: 110%; ">
-    Оценки
-    <span style="margin-left: 40px; font-size: 60%; color:#4f486b">
-      Чтобы добавить оценку нажмите на центр нужного поля
-    </span>
-  </span></div>
+  <div id="div" style="position: absolute; left: 10px; top: 193px; width: 66%; "><center style="margin: 0px; font-size: 110%; ">Оценки</center></div>
   <input type="submit" value="Применить оценки" style="position: absolute; left: 69%; top: 193px; width: 15%; height: 45px; border: 0px; font-size: 100%;">
 
   {% if status %}
@@ -101,6 +96,10 @@ input[type="number"]:focus {
     </tbody>
   </table>
       </form>
+
+      <span style="margin-left: 40px; font-size: 70%; color:#4f486b">
+        🛈 Чтобы добавить оценку нажмите на центр нужного поля
+      </span>
 
       <center><div style="height: 50vh; width: 100%;">
         <canvas id="myChart"></canvas>
