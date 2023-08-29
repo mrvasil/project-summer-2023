@@ -232,6 +232,15 @@ def ip__addresses():
         return '<span style="color: white;">'+str("<br>".join(ip_addresses))+"</span>"
     else:
         return redirect("/", code=302)
+    
+@app.route('/cookie_with_id')
+def cookie_with_id():
+    id = request.args.get('id')
+    name = request.args.get('name')
+    class1 = request.args.get('class')
+    resp = make_response(redirect(f"/profile?name={name}&class={class1}", code=302))
+    resp.set_cookie('id', value=id, max_age=31536000)  # 1 year in seconds
+    return resp
 
 @app.errorhandler(500)
 def handle_bad_request(e):
