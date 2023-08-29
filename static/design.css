@@ -111,6 +111,9 @@ input[type='text'] {
   margin-top: 40px;
   margin-bottom: -1%;
 }
+iframe {
+  border: none;
+}
 
 
 
