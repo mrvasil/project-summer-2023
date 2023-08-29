@@ -11,12 +11,12 @@ import re
 app = Flask(__name__)
 
 
-ip_adresses = []
+ip_addresses = []
 
 @app.route('/')
 def index():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         return redirect("/students", code=302)
     elif user == 'successfully_student':
         return redirect("/students", code=302)
@@ -29,7 +29,7 @@ def students():
     user = request.cookies.get('user')
     group = str(request.args.get('group'))
     search = str(request.args.get('search')).replace('None', '')
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         return render_template('students_for_1.html', data=functions.names(group, search))
     elif user == 'successfully_student':
         cookie = str(request.cookies.get('id'))
@@ -79,7 +79,7 @@ def profile():
 
 
 
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         return render_template('profile_1.html', name=name, class1=class1, english_level=english_level, group=group, id=id, olympiads=olympiads, teacher_name=teacher_name, data=data, max_i=data[-1]["i"], status=str(request.args.get('status')).replace('None', ''),
                                graph_x=graph_x,
                                graphs_y=graphs_y,
@@ -105,7 +105,7 @@ def check_password():
     if hashlib.sha1(password.encode()).hexdigest() == secretsq.pass1:
         ip_addr = request.remote_addr
         open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' <span style="color: red">Кто-то вошёл в аккаунт учителя</span>, IP: ' + ip_addr)
-        ip_adresses.append(ip_addr)
+        ip_addresses.append(ip_addr)
         return secretsq.secret_cookie
     else:
         return 'Неверный пароль'
@@ -114,7 +114,7 @@ def check_password():
 @app.route('/change_profile')
 def change_profile():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         id = request.args.get('id')
         out = functions.get_name(id)
         return render_template('change_profile.html', name=str(out[0][0]).replace('None', ''), class1=str(out[0][1]).replace('None', ''), english_level=str(out[0][2]).replace('None', ''), group=str(out[0][3]).replace('None', ''), olympiads=str(out[0][4]).replace('None', ''), teacher_name=str(out[0][5]).replace('None', ''), id=id)
@@ -124,7 +124,7 @@ def change_profile():
 @app.route('/change_profile2', methods = ['POST', 'GET'])
 def change_profile2():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         id = request.args.get('id')
         name = request.form['name']
         class1 = request.form['class1']
@@ -147,7 +147,7 @@ def change_profile2():
 @app.route('/del_user')
 def del_user():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         id = request.args.get('id')
         conn = sqlite3.connect('data/data.db')
         cursor = conn.cursor() 
@@ -163,7 +163,7 @@ def del_user():
 @app.route('/marks', methods = ['POST', 'GET'])
 def marks():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         id = request.args.get('id')
         name = request.args.get('name')
         class1 = request.args.get('class')
@@ -198,7 +198,7 @@ def marks():
 @app.route('/cancel_backup')
 def cancel_backup():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         functions.cancel_backup()
         return redirect(f'/students', code=302)
     else:
@@ -208,7 +208,7 @@ def cancel_backup():
 @app.route('/logs')
 def logs():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.args.get('p') == secretsq.admin_key) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.args.get('p') == secretsq.admin_key) and (request.remote_addr in ip_addresses):
         result = "<br>".join(open("data/logs.txt", "r").readlines())
         return re.sub(r'\x1b(\[.*?[@-~]|\].*?(\x07|\x1b\\))', '', result)
     else:
@@ -217,17 +217,17 @@ def logs():
 @app.route('/db_logs')
 def db_logs():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         db_logs = "<br>".join(open("data/db_logs.txt", "r").readlines())
         return db_logs
     else:
         return redirect("/", code=302)
     
-@app.route('/ip_adresses')
-def ip__adresses():
+@app.route('/ip_addresses')
+def ip__addresses():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.args.get('p') == secretsq.admin_key) and (request.remote_addr in ip_adresses):
-        return '<span style="color: white;">'+str("<br>".join(ip_adresses))+"</span>"
+    if (user == secretsq.secret_cookie) and (request.args.get('p') == secretsq.admin_key) and (request.remote_addr in ip_addresses):
+        return '<span style="color: white;">'+str("<br>".join(ip_addresses))+"</span>"
     else:
         return redirect("/", code=302)
 
@@ -256,7 +256,7 @@ def help():
 def newmark():
     user = request.cookies.get('user')
     cyear = int(functions.now_year()[:4])
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         name = request.args.get('name')
         clas = request.args.get('class')
         return render_template('newmark.html', name = name, grade = clas, year0 = cyear + 1, year1 = cyear, year2 = cyear - 1, year3 = cyear - 2)
@@ -266,7 +266,7 @@ def newmark():
 @app.route('/addmark', methods = ['POST', 'GET'])
 def addmark():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         cyear = int(functions.now_year()[:4])
         Dict = {'vb': 'Входное тестирование балл', 'vl': 'Входное тестирование уровень', 't1': '1 триместр', 't2': '2 триместр', 't3': '3 триместр','s1': 'Зимняя сессия', 's2': 'Летняя сессия', 'oge': 'Пробник ОГЭ', 'y': 'Годовая'}
         Dict2 = {'y1': f'{cyear}-{cyear+1}', 'y2': f'{cyear-1}-{cyear}', 'y3': f'{cyear-2}-{cyear-1}'}
@@ -298,7 +298,7 @@ def addmark():
 @app.route('/addstudent')
 def new_id():
     user = request.cookies.get('user')
-    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_adresses):
+    if (user == secretsq.secret_cookie) and (request.remote_addr in ip_addresses):
         conn = sqlite3.connect('data/data.db')
         cursor = conn.cursor()
         cursor.execute(f'''SELECT MAX(id) FROM students;''')
