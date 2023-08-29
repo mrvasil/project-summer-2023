@@ -1,7 +1,7 @@
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<title>Проофиль {{name}}</title>
+<title>Профиль {{name}}</title>
 <body>
 
   <center>
@@ -32,7 +32,7 @@
   
 
   <div id="div" style="position: absolute; left: 10px; top: 193px; width: 70%; "><center style="margin: 0px; font-size: 110%; ">Оценки</center></div>
-  <button style="position: absolute; left: 88%; top: 193px; width: 11.3%; height: 44px; cursor: pointer; font-size: 70%; box-shadow: 0.1em 0.2em 5px rgba(61, 61, 61, 0.356); padding-right: 10px;" onclick = "location.href='#achievements'">Достижения</button>
+  <button style="position: absolute; left: 88%; top: 193px; width: 11.3%; height: 44px; cursor: pointer; font-size: 70%; box-shadow: 0.1em 0.2em 5px rgba(61, 61, 61, 0.356); padding-right: 10px;" onclick = "location.href='#openModal2'">Достижения</button>
   <table id="text" style="margin-top: 100px;">
     <thead>
       <tr>
@@ -147,7 +147,24 @@
         );
       </script>
 
-<center><a name="achievements"><div id="div" style="width: 70%; height: fit-content;">Достижения: {{olympiads}}</div></a></center>
+
+<div id="openModal2" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Достижения</h3>
+        <a href="/profile?name={{ name }}&class={{class1}}" title="Close" class="close">×</a>
+      </div>
+      <div class="modal-body">    
+        <ul>
+          {% for i in olympiads.split("\n") %}
+			<li>{{i}}</li>
+          {% endfor %}
+		</ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <footer class="footer">&copy;<span> ENG-Silaeder.</span>  В случае проблем с сайтом - <a href="/help" style="color:#b3d4ff; text-decoration: none;">пишите</a>.</footer>
 

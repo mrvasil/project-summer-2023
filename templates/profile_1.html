@@ -1,11 +1,11 @@
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<title>Проофиль {{name}}</title>
+<title>Профиль {{name}}</title>
 <style>
   input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none; // Yeah, yeah everybody write about it
+    -webkit-appearance: none; 
 }
 
 input[type='number'],
@@ -27,7 +27,7 @@ input[type="number"]:focus {
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title">Изменить профиль</h3>
-        <a href="#close" title="Close" class="close">×</a>
+        <a href="/profile?name={{ name }}&class={{class1}}" title="Close" class="close" >×</a>
       </div>
       <div class="modal-body">    
         <ul>
@@ -36,7 +36,7 @@ input[type="number"]:focus {
               border: none;
             }
           </style>
-          <iframe src="/change_profile?id={{id}}" height="700px" width="485px" style="margin-left: -11%;"></iframe>
+          <iframe src="/change_profile?id={{id}}" height="620px" width="485px" style="margin-left: -11%;"></iframe>
           <span style="font-size: 70%; color:#4f486b;">
             🛈 После применения закройте это окно и обновите страницу
           </span>
@@ -59,7 +59,7 @@ input[type="number"]:focus {
     </div>
   </center> 
   <a href="/newmark?name={{name}}&class={{class1}}" ><button id="button" style="position: absolute; left: 84.6%; top: 184px; width: 40px; height: 45px; border: 0px; font-size: 100%;" >+</button></a>  
-  <button style="position: absolute; left: 88%; top: 193px; width: 11.3%; height: 44px; cursor: pointer; font-size: 70%; box-shadow: 0.1em 0.2em 5px rgba(61, 61, 61, 0.356); padding-right: 10px;" onclick = "location.href='#achievements'">Достижения</button>
+  <button style="position: absolute; left: 88%; top: 193px; width: 11.3%; height: 44px; cursor: pointer; font-size: 70%; box-shadow: 0.1em 0.2em 5px rgba(61, 61, 61, 0.356); padding-right: 10px;" onclick = "location.href='#openModal2'">Достижения</button>
   <form action="/marks?id={{id}}&name={{name}}&class={{class1}}&max_i={{max_i}}" method = 'post'>
   <div id="div" style="position: absolute; left: 10px; top: 193px; width: 66%; "><center style="margin: 0px; font-size: 110%; ">Оценки</center></div>
   <input type="submit" value="Применить оценки" style="position: absolute; left: 69%; top: 193px; width: 15%; height: 45px; border: 0px; font-size: 100%;">
@@ -130,83 +130,105 @@ input[type="number"]:focus {
       <center><div style="height: 50vh; width: 100%;">
         <canvas id="myChart"></canvas>
       </div></center>
-      <script>
-        const labels = {{ graph_x | tojson}};
-        const data = {
-            labels: labels,
-            datasets: [
-            {% for i in range(years |length -1) %}
-            {
-                label: '{{years[i]}}',
-                backgroundColor: 'white',
-                borderColor: '{{colors[i]}}',
-                data: {{ graphs_y[i] | tojson}}
-            },
-            {% endfor %}
-            {
-                label: '{{years[-1]}}',
-                backgroundColor: 'white',
-                borderColor: '{{colors[-2]}}',
-                data: {{ graphs_y[-1] | tojson}}
-            },
-            {
-                label: 'Среднее по группе',
-                backgroundColor: 'white',
-                borderColor: '{{colors[-1]}}',
-                data: {{ middle_of_group | tojson}}
-            }
-            ]
-        };
-        const config = {
-            type: 'line',
-            data: data,
-            options: {
-              layout: {
-                padding: {
-                  left: 50
-                }
-              },
-              maintainAspectRatio: false,
-              animation: false,
-              plugins: {
-                  legend: {
-                      labels: {
-                          color: "black",
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        min: 4,
-                        max: 10,
-                        ticks: {
-                            stepSize: 1,
-                            color: 'black'
-                        },
-                        grid: {
-                            color: "rgb(97, 97, 97)"
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            color: 'black'
-                        },
-                        grid: {
-                            color: "rgb(97, 97, 97)"
-                        }
-                    }
-                }
-            }
-        };
-        const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
-      </script>
+      
 
-<center><a name="achievements"><div id="div" style="width: 70%; height: fit-content;">Достижения: {{olympiads}}</div></a></center>
 
+<!-- HTML модального окна -->
+<div id="openModal2" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Достижения</h3>
+        <a href="#close" title="Close" class="close">×</a>
+      </div>
+      <div class="modal-body">    
+        <ul>
+          {% for i in olympiads.split("\n") %}
+			<li>{{i}}</li>
+          {% endfor %}
+		</ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <footer class="footer">&copy;<span> ENG-Silaeder.</span>  В случае проблем с сайтом - <a href="/help" style="color:#b3d4ff; text-decoration: none;">пишите</a>.</footer>
 
 </body>
+
+
+
+
+<script>
+  const labels = {{ graph_x | tojson}};
+  const data = {
+      labels: labels,
+      datasets: [
+      {% for i in range(years |length -1) %}
+      {
+          label: '{{years[i]}}',
+          backgroundColor: 'white',
+          borderColor: '{{colors[i]}}',
+          data: {{ graphs_y[i] | tojson}}
+      },
+      {% endfor %}
+      {
+          label: '{{years[-1]}}',
+          backgroundColor: 'white',
+          borderColor: '{{colors[-2]}}',
+          data: {{ graphs_y[-1] | tojson}}
+      },
+      {
+          label: 'Среднее по группе',
+          backgroundColor: 'white',
+          borderColor: '{{colors[-1]}}',
+          data: {{ middle_of_group | tojson}}
+      }
+      ]
+  };
+  const config = {
+      type: 'line',
+      data: data,
+      options: {
+        layout: {
+          padding: {
+            left: 50
+          }
+        },
+        maintainAspectRatio: false,
+        animation: false,
+        plugins: {
+            legend: {
+                labels: {
+                    color: "black",
+                  }
+              }
+          },
+          scales: {
+              y: {
+                  min: 4,
+                  max: 10,
+                  ticks: {
+                      stepSize: 1,
+                      color: 'black'
+                  },
+                  grid: {
+                      color: "rgb(97, 97, 97)"
+                  }
+              },
+              x: {
+                  ticks: {
+                      color: 'black'
+                  },
+                  grid: {
+                      color: "rgb(97, 97, 97)"
+                  }
+              }
+          }
+      }
+  };
+  const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+  );
+</script>
