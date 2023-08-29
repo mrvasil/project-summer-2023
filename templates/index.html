@@ -38,7 +38,6 @@
             success: function(response) {
                 if (response.includes('successfully')) {
                     window.location.replace('/students');
-                    document.cookie = "user="+response
                 } else {
                     resultDiv.text(response);
                 }

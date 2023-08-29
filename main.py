@@ -11,7 +11,7 @@ import re
 app = Flask(__name__)
 
 
-ip_addresses = []
+ip_addresses = secretsq.ip_addresses
 
 @app.route('/')
 def index():
@@ -106,7 +106,9 @@ def check_password():
         ip_addr = request.remote_addr
         open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+' <span style="color: red">Кто-то вошёл в аккаунт учителя</span>, IP: ' + ip_addr)
         ip_addresses.append(ip_addr)
-        return secretsq.secret_cookie
+        resp = make_response("successfully")
+        resp.set_cookie('user', value=secretsq.secret_cookie, max_age=99999999)  # 1 year in seconds
+        return resp
     else:
         return 'Неверный пароль'
     
