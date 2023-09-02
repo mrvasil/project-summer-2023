@@ -117,10 +117,13 @@ def cancel_backup():
     sp2 = []
     for i in sp:
         sp2.append(int(i[:-3]))
-    shutil.copyfile(f'db_backup/{max(sp2)}.db', 'data/data.db')
-    os.remove(f'db_backup/{max(sp2)}.db')
-    open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+f' <span style="color: red">Действие отменено</span>')
-    
+    if len(sp2) != 0:
+        shutil.copyfile(f'db_backup/{max(sp2)}.db', 'data/data.db')
+        os.remove(f'db_backup/{max(sp2)}.db')
+        open("data/db_logs.txt", "a+").write('\n'+str(datetime.now(timezone(timedelta(hours=+3))))[:-13]+f' <span style="color: red">Действие отменено</span>')
+        return True
+    else: 
+        return False
 #graph уже не используется
 def graph(data):
     d = {'v_ball': 'Входной тест (Уровень)', 'v_level': 'Входной тест (Балл)', 't_one': 'Триместр 1', 'winter': 'Зимняя сессия', 't_two': 'Триместр 2', 't_three': 'Триместр 3', 'year': 'Годовая', 'summer': 'Летняя сессия'}

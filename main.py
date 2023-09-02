@@ -199,8 +199,10 @@ def marks():
 def cancel_backup():
     user = request.cookies.get('user')
     if (user == secretsq.secret_cookie):
-        functions.cancel_backup()
-        return redirect(f'/students', code=302)
+        if functions.cancel_backup():
+            return redirect(f'/students', code=302)
+        else:
+            return "Невозможно отменить действие: действий не было"
     else:
         return redirect("/", code=302)
     
